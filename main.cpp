@@ -1,8 +1,12 @@
 #include <SFML/Graphics.hpp>
+#include "player.h"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(200, 600), "SFML works!");
+    GameObject doge;
+    doge.skinPath = "assets/doge.png";
+    
     sf::CircleShape shape1(100.f);
     sf::CircleShape shape2(100.f);
     sf::CircleShape shape3(100.f);
@@ -27,7 +31,7 @@ int main()
             if (event.type == sf::Event::Closed)
             {
                 window.close();
-            }
+            }/*
             if (event.type == sf::Event::MouseButtonPressed)
             {
                 if(event.mouseButton.y <= 200)
@@ -52,11 +56,12 @@ int main()
                         shape3.setFillColor(sf::Color(change[s3][0],change[s3][1],change[s3][2],change[s3][3]));
                 }
 
-            }
+            }*/
 
         }
 
         window.clear();
+        doge.move();    
         window.draw(shape1);
         window.draw(shape2);
         window.draw(shape3);

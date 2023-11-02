@@ -2,6 +2,7 @@
 #include "game.h"
 #include "button.h"
 #include "player.h"
+#include "score.h"
 
 const int WINDOW_SIZE_X = 900;
 const int WINDOW_SIZE_Y = 900;
@@ -20,9 +21,9 @@ int main()
     sf::Vector2f sizeStart;
     sizeStart.x = 0.5;
     sizeStart.y = 0.5;
-
-
     Button start("Start", positionStart, sizeStart, sf::Color::Red);
+
+    Score score;
 
     while (window.isOpen())
     {
@@ -39,6 +40,11 @@ int main()
             {
                 gameStarted = true;
             }   
+
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
+                score.increaseScore(100);
+                score.update();
+            }
         }
         
         window.clear();
@@ -49,7 +55,9 @@ int main()
         } else {
             doge.live(window);
             play.handleInput(window, event);
-            
+            score.draw(window);
+            score.update();
+
         }
         window.display();
         

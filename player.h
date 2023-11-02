@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <iostream>
 
 const int WINDOW_SIZEX = 900;
@@ -16,7 +17,7 @@ public:
     Player(std::string plAsset);
     //~Player();
     
-    void handleInput(sf::RenderWindow &window, sf::Event event);
+    void handleInput(sf::RenderWindow &window, sf::Event event, bool isKeyPressed);
     
     //void update(sf::Event& e, sf::RenderWindow& window);
     //virtual void draw(sf::RenderTarget& target,sf::RenderStates states) const;
@@ -28,7 +29,7 @@ private:
     sf::Texture mTexture;
     sf::Sprite mPlayer;
     sf::Vector2f mIncrement;
-
+    sf::Keyboard mKeyboard;
 
 };
 

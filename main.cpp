@@ -3,9 +3,8 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 600), "SFML works!");
-    GameObject doge;
-    doge.skinPath = "assets/doge.png";
+    sf::RenderWindow window(sf::VideoMode(200, 600), "jetpackCatride");
+    GameObject doge("assets/doge.png");
     
     while (window.isOpen())
     {
@@ -19,7 +18,7 @@ int main()
         }
 
         window.clear();
-        doge.move(window);    
+        doge.live(window);    
         window.display();
     }
 

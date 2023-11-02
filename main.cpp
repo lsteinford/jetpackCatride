@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "game.h"
 #include "button.h"
+#include "player.h"
 
 const int WINDOW_SIZE_X = 900;
 const int WINDOW_SIZE_Y = 900;
@@ -11,8 +12,17 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE_X, WINDOW_SIZE_Y), "jetpackCatride");
     GameObject doge("assets/doge.png");
+    Player play("assets/cat.jpeg");
     
-    Button start("Start",{WINDOW_SIZE_X / 2,WINDOW_SIZE_Y / 2}, {0.5, 0.5}, sf::Color::Red);
+    sf::Vector2f positionStart;
+    positionStart.x = WINDOW_SIZE_X/2;
+    positionStart.y = WINDOW_SIZE_Y/2;
+    sf::Vector2f sizeStart;
+    sizeStart.x = 0.5;
+    sizeStart.y = 0.5;
+
+
+    Button start("Start", positionStart, sizeStart, sf::Color::Red);
 
     while (window.isOpen())
     {
@@ -35,10 +45,14 @@ int main()
         if(!gameStarted)
         {
             window.draw(start);
+            
         } else {
             doge.live(window);
+            play.handleInput(window, event);
+            
         }
         window.display();
+        
     }
 
     return 0;

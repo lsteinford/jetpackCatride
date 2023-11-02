@@ -3,7 +3,7 @@
 
 Player::Player(std::string plAsset)
 {
-    sf::Texture mTexture;
+    
     if(!mTexture.loadFromFile(plAsset))
     exit(-1);
     mPlayer.setTexture(mTexture);
@@ -12,8 +12,8 @@ Player::Player(std::string plAsset)
     setPos.y = 100;
     mPlayer.setPosition(setPos);
     sf::Vector2f setSize;
-    setSize.x = 0.1;
-    setSize.y = 0.1;
+    setSize.x = 0.5;
+    setSize.y = 0.5;
     mPlayer.setScale(setSize);
 }
 

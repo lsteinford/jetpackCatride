@@ -7,21 +7,18 @@
 
 class GameObject{
     public:
-        int velocity; // how many positions the object moves every refresh 
+        int velocity; 
         int frequency; // how many times the object appears in a minute 
         std::string skinPath;
-        int hitboxL;
-        int hitboxW;
-        int hitboxR;
-        bool isRound; // need to know if hitbox is circle or rect
+        sf::Texture skin;
+        sf::Sprite sprite;
 
-        GameObject(); // default contructor
-       
+        // IF YOU USE DEFAULT CONSTRUCTOR IT WILL DEFAULT TO DOGE OBJECT
+        GameObject(); // default constructor
+        GameObject(std::string funcSkinPath);  
         // MAKE SURE OBJECT VARS ARE INITIALIZED BEFORE USING
-        void move(sf::RenderWindow &window); // takes velo, freq, skin, hitbox, and makes a moving object
+        void live(sf::RenderWindow &window); // controls the life of an obj 
 
-    private:
-        sf::Clock life;
 };
 
 #endif

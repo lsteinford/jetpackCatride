@@ -2,7 +2,7 @@
 
 Button::Button(std::string s, sf::Vector2f position, sf::Vector2f size, sf::Color color)
 {
-    if(!mTexture.loadFromFile("button.png"))
+    if(!mTexture.loadFromFile("assets/button.png"))
     {
         std::cout << "Error opening button image.\n";
         exit(1);
@@ -23,7 +23,7 @@ Button::Button(std::string s, sf::Vector2f position, sf::Vector2f size, sf::Colo
     mButton.setScale(size);
 
     //Button Text
-    if (!mFont.loadFromFile("college.ttf"))
+    if (!mFont.loadFromFile("assets/college.ttf"))
     {
         std::cout<<"Error opening file\n";
         exit(2);

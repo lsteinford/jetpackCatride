@@ -16,10 +16,10 @@ Button::Button(std::string s, sf::Vector2f position, sf::Vector2f size, sf::Colo
     mPosition = position;
     mButton.setPosition(mPosition);
 
-    //choose color
+    //button color
     mButtonColor = color;
     mButton.setColor(mButtonColor);
-    //set size as a ration of original size
+
     mButton.setScale(size);
 
     //Button Text
@@ -29,14 +29,13 @@ Button::Button(std::string s, sf::Vector2f position, sf::Vector2f size, sf::Colo
         exit(2);
     }
     mText.setFont(mFont);
-    //choose the font size based on button size (I choose half)
     unsigned int fontSize = mButton.getGlobalBounds().height/2;
     mText.setCharacterSize(fontSize);
-    //set label
+
     mText.setString(s);
-    //set origin to the middle
+    //set origin of text to the middle
     mText.setOrigin(mText.getGlobalBounds().width/2, mText.getGlobalBounds().height/2);
-    //set position at the middle of the button
+    //set position to the middle of the button
     mText.setPosition(position.x, position.y-fontSize/4);
     //choose colors
     mTextNormal = sf::Color::Green;

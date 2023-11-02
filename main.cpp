@@ -12,7 +12,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE_X, WINDOW_SIZE_Y), "jetpackCatride");
     GameObject doge("assets/doge.png");
-    Player play("assets/cat.jpeg");
+    Player play("assets/cat.png");
     
     sf::Vector2f positionStart;
     positionStart.x = WINDOW_SIZE_X/2;

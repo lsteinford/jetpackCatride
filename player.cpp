@@ -1,5 +1,5 @@
 #include "player.h"
-#include "game.h"
+#include "objects.h"
 
 Player::Player(std::string plAsset)
 {

@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "game.h"
+#include "objects.h"
 #include "button.h"
 #include "player.h"
 #include "score.h"
@@ -12,7 +12,7 @@ bool gameStarted = false;
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE_X, WINDOW_SIZE_Y), "jetpackCatride");
-    GameObject doge("assets/doge.png");
+    GameObject doge("assets/doge.png", 0.5f, 0.5f);
     Player play("assets/cat.png");
     
     sf::Vector2f positionStart;

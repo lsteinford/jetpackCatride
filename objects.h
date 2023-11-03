@@ -3,19 +3,20 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <random>
+#include <stdlib.h>
+#include <time.h>
 
 class GameObject{
     public:
-        int velocity; 
-        int frequency; // how many times the object appears in a minute 
+        float velocity; 
+        int frequency; 
         std::string skinPath;
         sf::Texture skin;
         sf::Sprite sprite;
 
         // IF YOU USE DEFAULT CONSTRUCTOR IT WILL DEFAULT TO DOGE OBJECT
         GameObject(); // default constructor
-        GameObject(std::string funcSkinPath);  
+        GameObject(std::string funcSkinPath, float scalex, float scaley);  
         // MAKE SURE OBJECT VARS ARE INITIALIZED BEFORE USING
         void live(sf::RenderWindow &window); // controls the life of an obj 
 

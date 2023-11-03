@@ -8,7 +8,7 @@
 
 class GameObject{
     public:
-        int velocity; 
+        float velocity; 
         int frequency; 
         std::string skinPath;
         sf::Texture skin;

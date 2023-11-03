@@ -19,7 +19,7 @@ Player::Player(std::string plAsset)
 
 
 
-void Player::handleInput(sf::RenderWindow &window, sf::Event event)
+void Player::handleInput(sf::RenderWindow &window, sf::Event event, bool isKeyPressed)
 {
 
         sf::Vector2f moveUp;
@@ -29,8 +29,9 @@ void Player::handleInput(sf::RenderWindow &window, sf::Event event)
         moveUp.x = 0;
         moveDown.y = 0.01;
 
-        if (event.type == sf::Event::MouseButtonPressed)
+        if (isKeyPressed==true)
         {
+            
             mPlayer.move(moveUp);
         }
         else

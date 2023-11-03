@@ -23,6 +23,7 @@ int main()
     sizeStart.y = 0.5;
     Button start("Start", positionStart, sizeStart, sf::Color::Red);
 
+    bool isKeyPressed = false;
     Score score;
 
     while (window.isOpen())
@@ -44,6 +45,10 @@ int main()
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
                 score.increaseScore(100);
                 score.update();
+                isKeyPressed = true;
+            }
+            if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) {
+                isKeyPressed = false;
             }
         }
         
@@ -54,13 +59,12 @@ int main()
             
         } else {
             doge.live(window);
-            play.handleInput(window, event);
+            play.handleInput(window, event, isKeyPressed);
             score.draw(window);
             score.update();
 
         }
         window.display();
-        
     }
 
     return 0;

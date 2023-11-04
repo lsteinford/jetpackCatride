@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/System/Clock.hpp>
 #include <iostream>
 
 const int WINDOW_SIZEX = 900;
@@ -21,6 +22,8 @@ public:
     
     //void update(sf::Event& e, sf::RenderWindow& window);
     //virtual void draw(sf::RenderTarget& target,sf::RenderStates states) const;
+    
+    void setTexture();
 
 private:
     int xPos,
@@ -30,6 +33,8 @@ private:
     sf::Sprite mPlayer;
     sf::Vector2f mIncrement;
     sf::Keyboard mKeyboard;
+    sf::IntRect spriteRect;
+    sf::Clock clock;
 
 };
 

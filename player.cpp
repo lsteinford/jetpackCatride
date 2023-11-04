@@ -15,7 +15,8 @@ Player::Player(std::string plAsset)
     setSize.x = 3;
     setSize.y = 3;
     mPlayer.setScale(setSize);
-    spriteRect = {0,0,64,48};
+    sf::IntRect makeRect(0, 0, 64, 48);
+    spriteRect = makeRect;
 }
 
 

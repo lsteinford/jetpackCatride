@@ -8,8 +8,8 @@ Player::Player(std::string plAsset, sf::IntRect frameRect)
     exit(-1);
     mPlayer.setTexture(mTexture);
     sf::Vector2f setPos;
-    setPos.x = 100;
-    setPos.y = 100;
+    setPos.x = 200;
+    setPos.y = 200;
     mPlayer.setPosition(setPos);
     sf::Vector2f setSize;
     setSize.x = 3;
@@ -72,3 +72,4 @@ void Player::updateTexture()
         lastTime = currenTime;
     }
 }
+

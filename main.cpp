@@ -20,7 +20,7 @@ int main()
     GameObject doge("assets/villiandoge.png", 0.5f, 0.5f, dogeRect, 0, 240);
     GameObject doge2("assets/villiandoge.png", 0.5f, 0.5f, dogeRect, 0, 240);
     GameObject doge3("assets/villiandoge.png", 0.5f, 0.5f, dogeRect, 0, 240);
-    GameObject goldCoin("assets/goldcoin1.png", 4.0f, 4.0f, coinRect, 27, 9);
+    GameObject goldCoin("assets/goldcoin1.png", 4.0f, 4.0f, coinRect, 54, 9);
     
     sf::Vector2f positionStart;
     positionStart.x = WINDOW_SIZE_X/2;

@@ -7,6 +7,8 @@
 class Score
 {
 public:
+    int scoreTotal;
+
     Score()
     {
         scoreTotal = 0;
@@ -29,7 +31,6 @@ public:
     void draw(sf::RenderWindow& window) 
         {window.draw(scoreText);}
 private:
-    int scoreTotal;
 
     sf::Text scoreText;
     sf::Font scoreFont;

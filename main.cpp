@@ -12,8 +12,11 @@ bool gameStarted = false;
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE_X, WINDOW_SIZE_Y), "jetpackCatride");
-    GameObject doge("assets/doge.png", 0.5f, 0.5f);
     Player play("assets/superCatAnimation.png");
+
+    GameObject doge("assets/doge.png", 0.5f, 0.5f);
+    GameObject doge2("assets/doge.png", 0.5f, 0.5f);
+    GameObject doge3("assets/doge.png", 0.5f, 0.5f);
     
     sf::Vector2f positionStart;
     positionStart.x = WINDOW_SIZE_X/2;
@@ -58,7 +61,42 @@ int main()
             window.draw(start);
             
         } else {
+            sf::Vertex line[] =
+            {
+                sf::Vertex(sf::Vector2f(0, 900)),
+                sf::Vertex(sf::Vector2f(900, 900))
+            };
+
+            sf::Vertex line2[] =
+            {
+                sf::Vertex(sf::Vector2f(900, 0)),
+                sf::Vertex(sf::Vector2f(900, 900))
+            };
+
+            window.draw(line, 2, sf::Lines);
+            window.draw(line2, 2, sf::Lines);
+
             doge.live(window);
+
+            bool passedFirstWave = false; 
+            bool passedSecondWave = false;
+            if(score.scoreTotal>5000){
+                if(passedFirstWave==false){
+                    doge.velocity = 0.2;
+                    doge2.velocity = 0.2;
+                    passedFirstWave = true;
+                }
+                doge2.live(window);
+            }
+            if(score.scoreTotal>10000){
+                if(passedSecondWave==false){
+                    doge.velocity = 0.3;
+                    doge2.velocity = 0.3;
+                    doge3.velocity = 0.3;
+                    passedSecondWave = true;
+                }
+                doge3.live(window);
+            }
             play.handleInput(window, event, isKeyPressed);
             score.draw(window);
             score.update();

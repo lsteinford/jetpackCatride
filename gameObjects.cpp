@@ -12,7 +12,7 @@ GameObject::GameObject(){
     sprite.scale(0.5f, 0.5f);
     sprite.setPosition(900, 600);
     lastTime = clock();
-    spriteRect = {0,0,0,0};
+    spriteRect = sf::IntRect{0,0,0,0};
 }
 
 GameObject::GameObject(std::string funcSkinPath, float scalex, float scaley, sf::IntRect frame, int leftValue, int spriteWidth){

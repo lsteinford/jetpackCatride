@@ -25,7 +25,6 @@ public:
     
     void updateTexture();
 
-private:
     int xPos,
         yPos;
 

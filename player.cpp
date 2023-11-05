@@ -42,7 +42,7 @@ void Player::handleInput(sf::RenderWindow &window, sf::Event event, bool isKeyPr
             mPlayer.move(moveDown);
             spriteRect.top = 144;
         }
-        setTexture();
+        updateTexture();
         window.draw(mPlayer);
 
 }
@@ -53,7 +53,7 @@ void Player::handleInput(sf::RenderWindow &window, sf::Event event, bool isKeyPr
  * 
  * @author Luke
  */
-void Player::setTexture()
+void Player::updateTexture()
 {
     if(clock.getElapsedTime().asSeconds() > 0.3f)
     {

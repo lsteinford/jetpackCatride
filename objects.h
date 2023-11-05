@@ -16,9 +16,15 @@ class GameObject{
 
         // IF YOU USE DEFAULT CONSTRUCTOR IT WILL DEFAULT TO DOGE OBJECT
         GameObject(); // default constructor
-        GameObject(std::string funcSkinPath, float scalex, float scaley);  
+        GameObject(std::string funcSkinPath, float scalex, float scaley, sf::IntRect frame, int leftValue, int spriteWidth);  
         // MAKE SURE OBJECT VARS ARE INITIALIZED BEFORE USING
         void live(sf::RenderWindow &window); // controls the life of an obj 
+
+        sf::IntRect spriteRect;
+        void updateTexture();
+        int maxLeft, frameWidth;
+
+        clock_t lastTime;
 
 };
 

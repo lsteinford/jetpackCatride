@@ -7,6 +7,9 @@
 const int WINDOW_SIZE_X = 900;
 const int WINDOW_SIZE_Y = 900;
 
+const sf::IntRect coinRect(0,0,9,9);
+const sf::IntRect dogeRect(0,0,240,240);
+
 bool gameStarted = false;
 
 int main()
@@ -14,9 +17,10 @@ int main()
     sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE_X, WINDOW_SIZE_Y), "jetpackCatride");
     Player play("assets/superCatAnimation.png");
 
-    GameObject doge("assets/doge.png", 0.5f, 0.5f);
-    GameObject doge2("assets/doge.png", 0.5f, 0.5f);
-    GameObject doge3("assets/doge.png", 0.5f, 0.5f);
+    GameObject doge("assets/doge.png", 0.5f, 0.5f, dogeRect, 0, 240);
+    GameObject doge2("assets/doge.png", 0.5f, 0.5f, dogeRect, 0, 240);
+    GameObject doge3("assets/doge.png", 0.5f, 0.5f, dogeRect, 0, 240);
+    GameObject goldCoin("assets/goldcoin1.png", 4.0f, 4.0f, coinRect, 27, 9);
     
     sf::Vector2f positionStart;
     positionStart.x = WINDOW_SIZE_X/2;
@@ -76,6 +80,7 @@ int main()
             window.draw(line, 2, sf::Lines);
             window.draw(line2, 2, sf::Lines);
 
+            goldCoin.live(window);
             doge.live(window);
 
             bool passedFirstWave = false; 

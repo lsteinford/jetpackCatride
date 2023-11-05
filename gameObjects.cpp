@@ -4,15 +4,15 @@ GameObject::GameObject(){
     //srand(time(NULL));
     velocity = 0.1;
     //frequency = 10;
-    skinPath = "assets/doge.png";
+    skinPath = "assets/villandoge.png";
     if(!skin.loadFromFile(skinPath))
         exit(-1);
    
     sprite.setTexture(skin);
     sprite.scale(0.5f, 0.5f);
-    sprite.setPosition(900, 600);
+    sprite.setPosition(0, 0);
     lastTime = clock();
-    spriteRect = sf::IntRect{0,0,0,0};
+    spriteRect = sf::IntRect(0,0,0,0);
 }
 
 GameObject::GameObject(std::string funcSkinPath, float scalex, float scaley, sf::IntRect frame, int leftValue, int spriteWidth){
@@ -25,7 +25,7 @@ GameObject::GameObject(std::string funcSkinPath, float scalex, float scaley, sf:
    
     sprite.setTexture(skin);
     sprite.scale(scalex, scaley);
-    sprite.setPosition(900, 600);
+    sprite.setPosition(000, 000);
     lastTime = clock();
     spriteRect = frame;
     maxLeft = leftValue;
@@ -67,3 +67,4 @@ void GameObject::updateTexture()
         lastTime = currentTime;
     }
 }
+

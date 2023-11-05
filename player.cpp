@@ -1,7 +1,7 @@
 #include "player.h"
 #include "objects.h"
 
-Player::Player(std::string plAsset)
+Player::Player(std::string plAsset, sf::IntRect frameRect)
 {
     
     if(!mTexture.loadFromFile(plAsset))
@@ -15,8 +15,8 @@ Player::Player(std::string plAsset)
     setSize.x = 3;
     setSize.y = 3;
     mPlayer.setScale(setSize);
-    sf::IntRect makeRect(0, 0, 64, 48);
-    spriteRect = makeRect;
+    spriteRect = frameRect;
+    lastTime = clock();
 }
 
 
@@ -55,7 +55,11 @@ void Player::handleInput(sf::RenderWindow &window, sf::Event event, bool isKeyPr
  */
 void Player::updateTexture()
 {
-    if(clock.getElapsedTime().asSeconds() > 0.3f)
+    clock_t currenTime = clock();
+
+    double elapsedTime = static_cast<double>(currenTime - lastTime) /CLOCKS_PER_SEC;
+
+    if(elapsedTime > 0.08f)
     {
         if(spriteRect.left == 128)
         {
@@ -65,6 +69,6 @@ void Player::updateTexture()
         }
 
         mPlayer.setTextureRect(spriteRect);
-        clock.restart();
+        lastTime = currenTime;
     }
 }

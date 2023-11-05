@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Keyboard.hpp>
-#include <SFML/System/Clock.hpp>
+#include <time.h>
 #include <iostream>
 
 const int WINDOW_SIZEX = 900;
@@ -15,7 +15,7 @@ class Player
 {
 public:
 
-    Player(std::string plAsset);
+    Player(std::string plAsset, sf::IntRect frameRect);
     //~Player();
     
     void handleInput(sf::RenderWindow &window, sf::Event event, bool isKeyPressed);
@@ -33,7 +33,7 @@ public:
     sf::Vector2f mIncrement;
     sf::Keyboard mKeyboard;
     sf::IntRect spriteRect;
-    sf::Clock clock;
+    clock_t lastTime;
 
 };
 

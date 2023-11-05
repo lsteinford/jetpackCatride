@@ -7,6 +7,7 @@
 const int WINDOW_SIZE_X = 900;
 const int WINDOW_SIZE_Y = 900;
 
+const sf::IntRect playerRect(0, 0, 64, 48);
 const sf::IntRect coinRect(0,0,9,9);
 const sf::IntRect dogeRect(0,0,240,240);
 
@@ -15,11 +16,11 @@ bool gameStarted = false;
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE_X, WINDOW_SIZE_Y), "jetpackCatride");
-    Player play("assets/superCatAnimation.png");
+    Player play("assets/superCatAnimation.png", playerRect);
 
-    GameObject doge("assets/villiandoge.png", 0.5f, 0.5f, dogeRect, 0, 240);
-    GameObject doge2("assets/villiandoge.png", 0.5f, 0.5f, dogeRect, 0, 240);
-    GameObject doge3("assets/villiandoge.png", 0.5f, 0.5f, dogeRect, 0, 240);
+    GameObject doge("assets/doge.png", 0.5f, 0.5f, dogeRect, 0, 240);
+    GameObject doge2("assets/doge.png", 0.5f, 0.5f, dogeRect, 0, 240);
+    GameObject doge3("assets/doge.png", 0.5f, 0.5f, dogeRect, 0, 240);
     GameObject goldCoin("assets/goldcoin1.png", 4.0f, 4.0f, coinRect, 54, 9);
     
     sf::Vector2f positionStart;

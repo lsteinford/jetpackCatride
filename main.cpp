@@ -58,6 +58,20 @@ int main()
             window.draw(start);
             
         } else {
+            sf::Vertex line[] =
+            {
+                sf::Vertex(sf::Vector2f(0, 900)),
+                sf::Vertex(sf::Vector2f(900, 900))
+            };
+
+            sf::Vertex line2[] =
+            {
+                sf::Vertex(sf::Vector2f(900, 0)),
+                sf::Vertex(sf::Vector2f(900, 900))
+            };
+
+            window.draw(line, 2, sf::Lines);
+            window.draw(line2, 2, sf::Lines);
             doge.live(window);
             play.handleInput(window, event, isKeyPressed);
             score.draw(window);

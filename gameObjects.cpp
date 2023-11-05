@@ -30,9 +30,10 @@ void GameObject::live(sf::RenderWindow &window){
     sf::Vector2f position = sprite.getPosition();
     
     if(position.x<0){
-        srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
+        srand(time(NULL));
         sf::Time time = sf::seconds(0.1f);
-        sprite.setPosition(900, (rand() % 901));
+
+        sprite.setPosition(900, (rand() %901));
     }
 
     sprite.move((-1*velocity), 0);

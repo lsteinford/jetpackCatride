@@ -32,7 +32,7 @@ GameObject::GameObject(std::string funcSkinPath, float scalex, float scaley, sf:
     frameWidth = spriteWidth;
 }
 
-void GameObject::live(sf::RenderWindow &window){
+void GameObject::live(bool isDoge, sf::RenderWindow &window){
     sf::Vector2f position = sprite.getPosition();
     
     if(position.x<0){
@@ -42,8 +42,10 @@ void GameObject::live(sf::RenderWindow &window){
     }
 
     sprite.move((-1*velocity), 0);
-        
-    updateTexture();
+    if(!isDoge)
+    {
+        updateTexture();
+    }
     window.draw(sprite);
         
 }

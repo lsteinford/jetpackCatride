@@ -7,7 +7,7 @@
 const int WINDOW_SIZE_X = 900;
 const int WINDOW_SIZE_Y = 900;
 
-const sf::IntRect playerRect(10, 5, 46, 34);
+const sf::IntRect playerRect(10, 149, 47, 33);
 const sf::IntRect coinRect(0,0,9,9);
 const sf::IntRect dogeRect(14,21,223,213);
 
@@ -59,6 +59,11 @@ int main()
             if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) {
                 isKeyPressed = false;
             }
+            if (restart)
+            {
+                gameStarted = false;
+            }
+
         }
         
         window.clear();
@@ -90,8 +95,6 @@ int main()
             if(pBounds.intersects(dogeBounds)==true)
             {
                 restart = true;
-                window.clear();
-                gameStarted = false;
             }
 
             bool passedFirstWave = false; 

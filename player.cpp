@@ -35,20 +35,14 @@ void Player::handleInput(sf::RenderWindow &window, sf::Event event, bool isKeyPr
         {
             
             mPlayer.move(moveUp);
-            spriteRect.left = 9;
             spriteRect.top = 198;
-            spriteRect.width = 47;
-            spriteRect.height = 33;
 
 
         }
         else
         {
             mPlayer.move(moveDown);
-            spriteRect.left = 10;
             spriteRect.top = 149;
-            spriteRect.width = 47;
-            spriteRect.height = 33;
 
         }
         updateTexture();
@@ -70,9 +64,9 @@ void Player::updateTexture()
 
     if(elapsedTime > 0.08f)
     {
-        if(spriteRect.left == 128)
+        if(spriteRect.left == 138)
         {
-            spriteRect.left = 0;
+            spriteRect.left = 10;
         } else {
             spriteRect.left += 64;
         }

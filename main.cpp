@@ -15,7 +15,6 @@ bool gameStarted = false;
 
 int main()
 {
-    bool restart = false;
     sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE_X, WINDOW_SIZE_Y), "jetpackCatride");
     Player play("assets/superCatAnimation.png", playerRect);
 
@@ -44,6 +43,7 @@ int main()
             {
                 window.close();
             }
+
             start.update(event, window);
 
             if(start.getState() == clicked)
@@ -59,10 +59,6 @@ int main()
             if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) {
                 isKeyPressed = false;
             }
-            if (restart)
-            {
-                gameStarted = false;
-            }
 
         }
         
@@ -70,7 +66,6 @@ int main()
         if(!gameStarted)
         {
             window.draw(start);
-            restart = false;
             
         } else {
             sf::Vertex line[] =
@@ -94,7 +89,7 @@ int main()
             sf::FloatRect dogeBounds = doge.sprite.getGlobalBounds();
             if(pBounds.intersects(dogeBounds)==true)
             {
-                restart = true;
+                gameStarted = false;
             }
 
             bool passedFirstWave = false; 
@@ -109,7 +104,7 @@ int main()
                 sf::FloatRect d2Bounds = doge2.sprite.getGlobalBounds();
                 if(pBounds.intersects(d2Bounds))
                 {
-                    return 0;
+                    gameStarted = false;
                 }
                 }
             if(score.scoreTotal>10000){
@@ -123,7 +118,7 @@ int main()
                 sf::FloatRect d3Bounds = doge3.sprite.getGlobalBounds();
                 if(pBounds.intersects(d3Bounds))
                 {
-                    return 0;
+                    gameStarted = false;
                 }
 
             }

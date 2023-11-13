@@ -1,5 +1,12 @@
 #include "Objects.h"
 
+//  BACKGROUND FUNCTIONS
+/**
+ * @brief Initialize background images
+ * 
+ * @param width 
+ * @param height 
+ */
 void Objects::initBackground(int width, int height)
 {
     background.setOrigin(backgroundX, 0);
@@ -11,6 +18,10 @@ void Objects::initBackground(int width, int height)
     background2.setTexture(&backTexture);
 }
 
+/**
+ * @brief Move background images
+ * 
+ */
 void Objects::moveBackground()
 {
     if(backgroundX == 0)
@@ -32,6 +43,13 @@ void Objects::moveBackground()
     
 }
 
+// PLAYER FUNCTIONS
+/**
+ * @brief Initialize Player Object
+ * 
+ * @param playerFile 
+ * @param rect 
+ */
 void Objects::initPlayer(std::string playerFile, sf::IntRect rect)
 {
     playerTexture.loadFromFile(playerFile);
@@ -43,6 +61,13 @@ void Objects::initPlayer(std::string playerFile, sf::IntRect rect)
     lastTime = clock();
 }
 
+/**
+ * @brief Move Player object
+ * 
+ * @param window 
+ * @param event 
+ * @param isKeyPressed 
+ */
 void Objects::movePlayer(sf::RenderWindow &window, sf::Event event, bool isKeyPressed)
 {
     sf::Vector2f moveUp;
@@ -67,6 +92,12 @@ void Objects::movePlayer(sf::RenderWindow &window, sf::Event event, bool isKeyPr
     window.draw(player);
 }
 
+// OBSTACLE FUNCTIONS
+/**
+ * @brief Initialize Obstacles object
+ * 
+ * @param obstFile 
+ */
 void Objects::initObstacles(std::string obstFile)
 {
     obsTexture.loadFromFile(obstFile);
@@ -75,6 +106,11 @@ void Objects::initObstacles(std::string obstFile)
     obst.setPosition(000, 000);
 }
 
+/**
+ * @brief Move Obstacles
+ * 
+ * @param window 
+ */
 void Objects::moveObstacles(sf::RenderWindow& window)
 {
     sf::Vector2f position = obst.getPosition();
@@ -87,6 +123,12 @@ void Objects::moveObstacles(sf::RenderWindow& window)
     window.draw(obst);
 }
 
+// COIN FUNCTIONS
+/**
+ * @brief Initialize Coins object
+ * 
+ * @param coinFile 
+ */
 void Objects::initCoins(std::string coinFile)
 {
     coinTexture.loadFromFile(coinFile);
@@ -96,6 +138,11 @@ void Objects::initCoins(std::string coinFile)
     objState = objState::coin;
 }
 
+/**
+ * @brief Move Coins
+ * 
+ * @param window 
+ */
 void Objects::moveCoins(sf::RenderWindow& window)
 {
     sf::Vector2f position = coin.getPosition();
@@ -108,6 +155,10 @@ void Objects::moveCoins(sf::RenderWindow& window)
     window.draw(coin);
 }
 
+/**
+ * @brief Animates sprites for coins and player
+ * 
+ */
 void Objects::animateSprite()
 {
 
@@ -150,6 +201,15 @@ void Objects::animateSprite()
     }
 }
 
+// BUTTON FUNCTIONS
+/**
+ * @brief Initialize Buttons
+ * 
+ * @param s 
+ * @param position 
+ * @param size 
+ * @param color 
+ */
 void Objects::initButton(std::string s, sf::Vector2f position, sf::Vector2f size, sf::Color color)
 {
     buttonTexture.loadFromFile(s);
@@ -187,12 +247,24 @@ void Objects::initButton(std::string s, sf::Vector2f position, sf::Vector2f size
     btnState = buttonState::normal;
 }
 
+/**
+ * @brief Draw Button
+ * 
+ * @param target 
+ * @param states 
+ */
 void Objects::drawButton(sf::RenderTarget& target,sf::RenderStates states) const
 {
     target.draw(button, states);
     target.draw(buttonText, states);
 }
 
+/**
+ * @brief Detect if mouse is over button
+ * 
+ * @param e 
+ * @param window 
+ */
 void Objects::updateButton(sf::Event& e, sf::RenderWindow& window)
 {
     //Allow window to be expanded without breaking

@@ -54,7 +54,7 @@ public:
 
     clock_t lastTime;
 
-    int backgroundX, backgroundX2;
+    float backgroundX, backgroundX2;
 
 };
 

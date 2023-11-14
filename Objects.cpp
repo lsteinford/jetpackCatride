@@ -11,8 +11,8 @@ void Objects::initBackground(int width, int height)
 {
     background.setOrigin(backgroundX, 0);
     background.setSize(sf::Vector2f(width, height));
-    background.setOrigin(backgroundX2, 0);
-    background.setSize(sf::Vector2f(width, height));
+    background2.setOrigin(backgroundX2, 0);
+    background2.setSize(sf::Vector2f(width, height));
     backTexture.loadFromFile("assets/city1/1.png");
     background.setTexture(&backTexture);
     background2.setTexture(&backTexture);
@@ -26,20 +26,20 @@ void Objects::moveBackground()
 {
     if(backgroundX == 0)
     {
-        backgroundX = -576;
+        backgroundX = -1200;
         backgroundX2 = 0;
     }
     if(backgroundX2 == 0)
     {
         backgroundX = 0;
-        backgroundX2 = -576;
+        backgroundX2 = -1200;
     }
 
     background.setOrigin(backgroundX, 0);
     background2.setOrigin(backgroundX2, 0);
 
-    backgroundX += 2;
-    backgroundX2 += 2;
+    backgroundX += 0.25;
+    backgroundX2 += 0.25;
     
 }
 

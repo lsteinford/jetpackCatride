@@ -31,7 +31,7 @@ int main()
     {
         game.events();
 
-        if(startGame = false)
+        if(startGame == false)
         {
             mainMenu(startGame, game, Player, Background, startButton);
         }
@@ -43,7 +43,6 @@ int main()
         {
             deathScreen();
         }
-
 
     }
 

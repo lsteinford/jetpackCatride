@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <time.h>
 
 class Game
 {
@@ -18,6 +19,7 @@ public:
     void clear();
     sf::Event e;
     sf::RenderWindow window;
+    clock_t startTime;
 
 private:
     

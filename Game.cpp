@@ -3,7 +3,6 @@
 Game::Game(int winSizeX, int winSizeY, std::string gameName)
 {
     window.create(sf::VideoMode(winSizeX, winSizeY), gameName);
-    startTime = clock();
 }
 
 void Game::events()

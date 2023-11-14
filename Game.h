@@ -2,8 +2,8 @@
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/System/Clock.hpp>
 #include <string>
-#include <time.h>
 
 class Game
 {
@@ -21,6 +21,7 @@ public:
     sf::RenderWindow window;
     clock_t startTime;
 
+    sf::Clock clock;
 private:
     
 };

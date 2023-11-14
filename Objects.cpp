@@ -9,6 +9,8 @@
  */
 void Objects::initBackground(int width, int height)
 {
+    backgroundX = 0;
+    backgroundX2 = width;
     background.setOrigin(backgroundX, 0);
     background.setSize(sf::Vector2f(width, height));
     background2.setOrigin(backgroundX2, 0);
@@ -22,24 +24,25 @@ void Objects::initBackground(int width, int height)
  * @brief Move background images
  * 
  */
-void Objects::moveBackground()
+void Objects::moveBackground(double dt)
 {
-    if(backgroundX == 0)
+    backgroundX += 1 * dt;
+    backgroundX2 += 1 * dt;
+
+    if(backgroundX >= 1200)
     {
         backgroundX = -1200;
-        backgroundX2 = 0;
     }
-    if(backgroundX2 == 0)
+    if(backgroundX2 >= 1200)
     {
-        backgroundX = 0;
         backgroundX2 = -1200;
     }
 
-    background.setOrigin(backgroundX, 0);
-    background2.setOrigin(backgroundX2, 0);
+    int roundedX = static_cast<int>(std::round(backgroundX));
+    int roundedX2 = static_cast<int>(std::round(backgroundX2));
 
-    backgroundX += 0.25;
-    backgroundX2 += 0.25;
+    background.setOrigin(roundedX, 0);
+    background2.setOrigin(roundedX2, 0);
     
 }
 
@@ -52,13 +55,16 @@ void Objects::moveBackground()
  */
 void Objects::initPlayer(std::string playerFile, sf::IntRect rect)
 {
+    playerX = 200;
+    playerY = 200;
+    playerSizeX = 3;
+    playerSizeY = 3;
     playerTexture.loadFromFile(playerFile);
     player.setTexture(playerTexture);
     player.setPosition(sf::Vector2f(playerX, playerY));
     player.setScale(sf::Vector2f(playerSizeX, playerSizeY));
     playerRect = rect;
     objState = objState::player;
-    lastTime = clock();
 }
 
 /**
@@ -100,6 +106,8 @@ void Objects::movePlayer(sf::RenderWindow &window, sf::Event event, bool isKeyPr
  */
 void Objects::initObstacles(std::string obstFile)
 {
+    obstSizeX = 1;
+    obstSizeY = 1;
     obsTexture.loadFromFile(obstFile);
     obst.setTexture(obsTexture);
     obst.setScale(sf::Vector2f(obstSizeX, obstSizeY));
@@ -131,6 +139,7 @@ void Objects::moveObstacles(sf::RenderWindow& window)
  */
 void Objects::initCoins(std::string coinFile)
 {
+    coinSize = 4;
     coinTexture.loadFromFile(coinFile);
     coin.setTexture(coinTexture);
     coin.setScale(sf::Vector2f(coinSize, coinSize));
@@ -162,26 +171,25 @@ void Objects::moveCoins(sf::RenderWindow& window)
 void Objects::animateSprite()
 {
 
-    clock_t currentTime = clock();
-
-    double elapsedTime = static_cast<double>(currentTime - lastTime) / CLOCKS_PER_SEC;
+    sf::Time elapsed = clock.restart();
+    double elapsedTime = elapsed.asSeconds();
 
     switch(objState)
     {
         case objState::player:
         {
             if(elapsedTime > 0.08f)
-        {
-            if(playerRect.left == 138)
             {
-                playerRect.left = 10;
-            } else {
-                playerRect.left += 64;
-            }
+                if(playerRect.left == 138)
+                {
+                    playerRect.left = 0;
+                } else {
+                    playerRect.left += 64;
+                }
 
-            player.setTextureRect(playerRect);
-            lastTime = currentTime;
-        }
+                player.setTextureRect(playerRect);
+            }
+            break;
         }
         case objState::coin:
         {
@@ -195,8 +203,8 @@ void Objects::animateSprite()
                 }
 
                 coin.setTextureRect(coinRect);
-                lastTime = currentTime;
             }
+            break;
         }
     }
 }

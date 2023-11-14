@@ -30,10 +30,12 @@ int main()
     while(game.gameRunning())
     {
         game.events();
+        sf::Time gameTime = game.clock.restart();
+        double deltaTime = gameTime.asSeconds();
 
         if(startGame == false)
         {
-            mainMenu(startGame, game, Player, Background, startButton);
+            mainMenu(startGame, game, Player, Background, startButton, deltaTime);
         }
         if(startGame == true && failedGame == false)
         {

@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <time.h>
 #include <string>
+#include <cmath>
 
 enum objState{coin, player};
 enum buttonState{normal, hovered, clicked};
@@ -14,7 +14,7 @@ class Objects
 public:
     // Background Init
     void initBackground(int width, int height);
-    void moveBackground();
+    void moveBackground(double dt);
     // Player Init
     void initPlayer(std::string playerFile, sf::IntRect rect);
     void movePlayer(sf::RenderWindow &window, sf::Event event, bool isKeyPressed);
@@ -44,15 +44,11 @@ public:
     sf::Font font;
     sf::Text buttonText;
 
-    int playerX = 200;
-    int playerY = 200;
-    int playerSizeX = 3;
-    int playerSizeY = 3;
-    int obstSizeX = 1;
-    int obstSizeY = 1;
-    int coinSize = 4;
+    int playerX, playerY, playerSizeX, playerSizeY;
+    int obstSizeX, obstSizeY;
+    int coinSize;
 
-    clock_t lastTime;
+    sf::Clock clock;
 
     float backgroundX, backgroundX2;
 

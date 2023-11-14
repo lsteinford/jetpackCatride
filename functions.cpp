@@ -1,6 +1,6 @@
 #include "header.h"
 
-void mainMenu(bool& startGame, Game& game, Objects Player, Objects& Background, Objects startButton)
+void mainMenu(bool& startGame, Game& game, Objects Player, Objects& Background, Objects startButton, double deltaTime)
 {
     while(startGame == false)
     {
@@ -11,7 +11,7 @@ void mainMenu(bool& startGame, Game& game, Objects Player, Objects& Background, 
         game.drawSprite(startButton.button);
         startButton.updateButton(game.e, game.window);
         Player.animateSprite();
-        Background.moveBackground();
+        Background.moveBackground(deltaTime);
 
         game.display();
 

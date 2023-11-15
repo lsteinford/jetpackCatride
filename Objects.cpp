@@ -174,7 +174,7 @@ void Objects::animateSprite()
     sf::Time elapsed = clock.restart();
     double elapsedTime = elapsed.asSeconds();
 
-    switch(objState)
+    switch(this->objState)
     {
         case objState::player:
         {
@@ -218,7 +218,7 @@ void Objects::animateSprite()
  * @param size 
  * @param color 
  */
-void Objects::initButton(std::string s, sf::Vector2f position, sf::Vector2f size, sf::Color color)
+void Objects::initButton(std::string s, std::string text, sf::Vector2f position, sf::Vector2f size, sf::Color color)
 {
     buttonTexture.loadFromFile(s);
     button.setTexture(buttonTexture);
@@ -242,7 +242,7 @@ void Objects::initButton(std::string s, sf::Vector2f position, sf::Vector2f size
     unsigned int fontSize = button.getGlobalBounds().height/2;
     buttonText.setCharacterSize(fontSize);
 
-    buttonText.setString(s);
+    buttonText.setString(text);
     //set origin of text to the middle
     buttonText.setOrigin(buttonText.getGlobalBounds().width/2, buttonText.getGlobalBounds().height/2);
     //set position to the middle of the button

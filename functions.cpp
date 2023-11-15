@@ -9,9 +9,9 @@ void mainMenu(bool& startGame, Game& game, Objects Player, Objects& Background, 
         game.drawRect(Background.background2);
         game.drawSprite(Player.player);
         game.drawSprite(startButton.button);
-        startButton.updateButton(game.e, game.window);
         Player.animateSprite();
         Background.moveBackground(deltaTime);
+        startButton.updateButton(game.e, game.window);
 
         game.display();
 

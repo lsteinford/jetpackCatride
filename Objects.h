@@ -25,7 +25,7 @@ public:
     void initCoins(std::string coinFile);
     void moveCoins(sf::RenderWindow& window);
     // Button Init
-    void initButton(std::string s, sf::Vector2f position, sf::Vector2f size, sf::Color color);
+    void initButton(std::string s, std::string text, sf::Vector2f position, sf::Vector2f size, sf::Color color);
     virtual void drawButton(sf::RenderTarget& target,sf::RenderStates states) const;
     void updateButton(sf::Event& e, sf::RenderWindow& window);
     sf::Uint32 getButtonState(){return btnState;};

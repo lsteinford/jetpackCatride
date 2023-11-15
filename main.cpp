@@ -23,7 +23,7 @@ int main()
     sf::Vector2f sizeStart;
     sizeStart.x = 0.5;
     sizeStart.y = 0.5;
-    startButton.initButton("assets/button.png", positionStart, sizeStart, sf::Color::Red);
+    startButton.initButton("assets/button.png", "Start", positionStart, sizeStart, sf::Color::Red);
 
 
 

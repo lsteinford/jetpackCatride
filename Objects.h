@@ -14,7 +14,7 @@ class Objects
 public:
     // Background Init
     void initBackground(int width, int height);
-    void moveBackground(double dt);
+    void moveBackground(double dt, int width);
     // Player Init
     void initPlayer(std::string playerFile, sf::IntRect rect);
     void movePlayer(sf::RenderWindow &window, sf::Event event, bool isKeyPressed);
@@ -35,8 +35,7 @@ public:
     void animateSprite();
 
     sf::Sprite player, obst, coin, button;
-    sf::RectangleShape background, background2;
-    sf::Texture backTexture, playerTexture, obsTexture, coinTexture, buttonTexture;
+    sf::Texture playerTexture, obsTexture, coinTexture, buttonTexture;
     sf::IntRect playerRect, coinRect;
     sf::Uint32 objState, btnState;
     sf::Vector2f buttonPos;
@@ -50,7 +49,11 @@ public:
 
     sf::Clock clock;
 
-    float backgroundX, backgroundX2;
+    // Background Variables
+    sf::RectangleShape background[5], backgroundDupe[5];
+    sf::Texture backTexture[5];
+    float backgroundX[5], backgroundDupeX[5];
+    float speeds[5] = {1.0, 0.9, 0.8, 0.7, 0.6};
 
 };
 

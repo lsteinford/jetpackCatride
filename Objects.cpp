@@ -9,40 +9,54 @@
  */
 void Objects::initBackground(int width, int height)
 {
-    backgroundX = 0;
-    backgroundX2 = width;
-    background.setOrigin(backgroundX, 0);
-    background.setSize(sf::Vector2f(width, height));
-    background2.setOrigin(backgroundX2, 0);
-    background2.setSize(sf::Vector2f(width, height));
-    backTexture.loadFromFile("assets/city1/1.png");
-    background.setTexture(&backTexture);
-    background2.setTexture(&backTexture);
+    // Randomize City Background
+    sf::Time time = clock.restart();
+    int randCity = 1 + static_cast<int>(time.asMicroseconds()) % 5;
+
+    for(int i = 0; i < 5; i++)
+    {
+        backgroundX[i] = 0;
+        backgroundDupeX[i] = width;
+
+        background[i].setPosition(backgroundX[i], 0);
+        background[i].setSize(sf::Vector2f(width, height));
+
+        backgroundDupe[i].setPosition(backgroundDupeX[i], 0);
+        backgroundDupe[i].setSize(sf::Vector2f(width, height));
+
+        backTexture[i].loadFromFile("assets/city" + std::to_string(randCity) + "/" + std::to_string(i + 1) + ".png");
+        
+        background[i].setTexture(&backTexture[i]);
+        backgroundDupe[i].setTexture(&backTexture[i]);
+        
+    }
 }
 
 /**
  * @brief Move background images
  * 
  */
-void Objects::moveBackground(double dt)
+void Objects::moveBackground(double dt, int width)
 {
-    backgroundX += 1 * dt;
-    backgroundX2 += 1 * dt;
 
-    if(backgroundX >= 1200)
+    for(int i = 0; i < 5; i++)
     {
-        backgroundX = -1200;
-    }
-    if(backgroundX2 >= 1200)
-    {
-        backgroundX2 = -1200;
-    }
+        backgroundX[i] += speeds[i] * -dt;
+        backgroundDupeX[i] += speeds[i] * -dt;
 
-    int roundedX = static_cast<int>(std::round(backgroundX));
-    int roundedX2 = static_cast<int>(std::round(backgroundX2));
+        if (backgroundX[i] <= -width)
+        {
+            backgroundX[i] = width;
+        }
 
-    background.setOrigin(roundedX, 0);
-    background2.setOrigin(roundedX2, 0);
+        if (backgroundDupeX[i] <= -width)
+        {
+            backgroundDupeX[i] = width;
+        }
+        
+        background[i].setPosition(backgroundX[i], 0);
+        backgroundDupe[i].setPosition(backgroundDupeX[i], 0);;
+    }
     
 }
 

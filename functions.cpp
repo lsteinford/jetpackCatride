@@ -4,13 +4,17 @@ void mainMenu(bool& startGame, Game& game, Objects Player, Objects& Background, 
 {
     while(startGame == false)
     {
+        game.events();
         game.clear();
-        game.drawRect(Background.background);
-        game.drawRect(Background.background2);
+        for(int i = 0; i < 5; i++)
+        {
+            game.drawRect(Background.background[i]);
+            game.drawRect(Background.backgroundDupe[i]);
+        }
         game.drawSprite(Player.player);
         game.drawSprite(startButton.button);
         Player.animateSprite();
-        Background.moveBackground(deltaTime);
+        Background.moveBackground(deltaTime, WINDOW_SIZE_X);
         startButton.updateButton(game.e, game.window);
 
         game.display();
@@ -26,7 +30,7 @@ void gameRun(bool& startGame, bool& failedGame)
 {
     while(startGame == true && failedGame == false)
     {
-
+        
     }
 }
 

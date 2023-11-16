@@ -15,8 +15,8 @@ const int WINDOW_SIZE_Y = 675;
 const sf::IntRect playerRect(0, 0, 64, 48);
 const sf::IntRect coinRect(0,0,9,9);
 
-void mainMenu(bool& startGame, Game& game, Objects Player, Objects& Background, Objects startButton, double deltaTime);
-void gameRun(bool& startGame, bool& failedGame);
+void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background, Objects startButton, double deltaTime);
+void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obstacles, Objects& Coins, double deltaTime);
 void deathScreen();
 
 

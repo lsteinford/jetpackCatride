@@ -8,6 +8,7 @@ int main()
     Objects Background;
     Objects Player;
     Objects Coin;
+    Objects Obstacle;
     Objects startButton;
     
 
@@ -15,7 +16,11 @@ int main()
     bool failedGame = false;
 
     Player.initPlayer("assets/superCatAnimation.png", playerRect);
+    Obstacle.initObstacles("assets/villiandoge.png");
+    Coin.initCoins("assets/goldcoin1.png");
+
     Background.initBackground(WINDOW_SIZE_X, WINDOW_SIZE_Y);
+
     // Button initialization
     sf::Vector2f positionStart;
     positionStart.x = WINDOW_SIZE_X/2;
@@ -24,8 +29,6 @@ int main()
     sizeStart.x = 0.5;
     sizeStart.y = 0.5;
     startButton.initButton("assets/button.png", "Start", positionStart, sizeStart, sf::Color::Red);
-
-
 
     while(game.gameRunning())
     {
@@ -39,7 +42,7 @@ int main()
         }
         if(startGame == true && failedGame == false)
         {
-            gameRun(startGame, failedGame);
+            gameRun(startGame, failedGame, game, Background, Player, Obstacle, Coin, deltaTime);
         }
         if(failedGame)
         {

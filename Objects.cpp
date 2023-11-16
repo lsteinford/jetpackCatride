@@ -73,12 +73,15 @@ void Objects::initPlayer(std::string playerFile, sf::IntRect rect)
     playerY = 200;
     playerSizeX = 3;
     playerSizeY = 3;
+    playerRect = rect;
     playerTexture.loadFromFile(playerFile);
     player.setTexture(playerTexture);
+    player.setTextureRect(playerRect);
     player.setPosition(sf::Vector2f(playerX, playerY));
     player.setScale(sf::Vector2f(playerSizeX, playerSizeY));
-    playerRect = rect;
+   
     objState = objState::player;
+    clock.restart();
 }
 
 /**
@@ -88,16 +91,16 @@ void Objects::initPlayer(std::string playerFile, sf::IntRect rect)
  * @param event 
  * @param isKeyPressed 
  */
-void Objects::movePlayer(sf::RenderWindow &window, sf::Event event, bool isKeyPressed)
+void Objects::movePlayer(sf::RenderWindow &window)
 {
     sf::Vector2f moveUp;
     moveUp.x = 0;
     moveUp.y = -0.1;
     sf::Vector2f moveDown;
-    moveUp.x = 0;
+    moveDown.x = 0;
     moveDown.y = 0.05;
 
-    if (isKeyPressed==true)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
     {
         
         player.move(moveUp);

@@ -4,7 +4,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <string>
-#include <cmath>
 
 enum objState{coin, player};
 enum buttonState{normal, hovered, clicked};
@@ -17,7 +16,7 @@ public:
     void moveBackground(double dt, int width);
     // Player Init
     void initPlayer(std::string playerFile, sf::IntRect rect);
-    void movePlayer(sf::RenderWindow &window, sf::Event event, bool isKeyPressed);
+    void movePlayer(sf::RenderWindow &window);
     // Obstacle Init
     void initObstacles(std::string obstFile);
     void moveObstacles(sf::RenderWindow& window);

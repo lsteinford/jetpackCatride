@@ -111,7 +111,6 @@ void Objects::movePlayer(sf::RenderWindow &window)
         player.move(moveDown);
         playerRect.top = 144;
     }
-    animateSprite();
     window.draw(player);
 }
 
@@ -185,32 +184,29 @@ void Objects::moveCoins(sf::RenderWindow& window)
  * @brief Animates sprites for coins and player
  * 
  */
-void Objects::animateSprite()
+void Objects::animateSprite(Objects& object)
 {
 
-    sf::Time elapsed = clock.restart();
+    sf::Time elapsed = clock.getElapsedTime();
     double elapsedTime = elapsed.asSeconds();
 
-    switch(this->objState)
+    if(object.getObjState() == objState::player)
     {
-        case objState::player:
+       if(elapsedTime > 0.08f)
         {
-            if(elapsedTime > 0.08f)
+            if(playerRect.left == 128)
             {
-                if(playerRect.left == 138)
-                {
-                    playerRect.left = 0;
-                } else {
-                    playerRect.left += 64;
-                }
-
-                player.setTextureRect(playerRect);
+                playerRect.left = 0;
+            } else {
+                playerRect.left += 64;
             }
-            break;
+
+            player.setTextureRect(playerRect);
+            
         }
-        case objState::coin:
-        {
-            if(elapsedTime > 0.07f)
+    } else if(object.getObjState() == objState::coin){
+        
+        if(elapsedTime > 0.07f)
             {
                 if(coinRect.left == 54)
                 {
@@ -221,9 +217,8 @@ void Objects::animateSprite()
 
                 coin.setTextureRect(coinRect);
             }
-            break;
-        }
     }
+    clock.restart();
 }
 
 // BUTTON FUNCTIONS
@@ -235,39 +230,25 @@ void Objects::animateSprite()
  * @param size 
  * @param color 
  */
-void Objects::initButton(std::string s, std::string text, sf::Vector2f position, sf::Vector2f size, sf::Color color)
+void Objects::initButton(std::string s, std::string text, sf::IntRect rect, sf::Vector2f position, sf::Vector2f size, sf::Color color)
 {
-    buttonTexture.loadFromFile(s);
-    button.setTexture(buttonTexture);
+    normalButton.loadFromFile("assets/button/normal.png");
+    hoverButton.loadFromFile("assets/button/hover.png");
+    clickButton.loadFromFile("assets/button/pressed.png");
+    button.setTexture(normalButton);
 
     // temporary until final button is drawn. This will be used with the button.png from lab9 and is needed to rotate the button
     // to give the "pushed" look
-    sf::Vector2u imageSize = buttonTexture.getSize();
+    sf::Vector2u imageSize = normalButton.getSize();
     button.setOrigin(imageSize.x/2, imageSize.y/2);
     buttonPos = position;
     button.setPosition(buttonPos);
 
     //button color
-    buttonColor = color;
-    button.setColor(buttonColor);
+    // buttonColor = color;
+    // button.setColor(buttonColor);
 
     button.setScale(size);
-
-    //Button Text
-    font.loadFromFile("assets/college.ttf");
-    buttonText.setFont(font);
-    unsigned int fontSize = button.getGlobalBounds().height/2;
-    buttonText.setCharacterSize(fontSize);
-
-    buttonText.setString(text);
-    //set origin of text to the middle
-    buttonText.setOrigin(buttonText.getGlobalBounds().width/2, buttonText.getGlobalBounds().height/2);
-    //set position to the middle of the button
-    buttonText.setPosition(position.x, position.y-fontSize/4);
-    //choose colors
-    textNormal = sf::Color::Green;
-    textHover = sf::Color::Red;
-    buttonText.setFillColor(textNormal);
 
     btnState = buttonState::normal;
 }
@@ -343,20 +324,17 @@ void Objects::updateButton(sf::Event& e, sf::RenderWindow& window)
     {
         case buttonState::normal:
         {
-            button.setRotation(0);
-            buttonText.setFillColor(textNormal);
+            button.setTexture(normalButton);
             break;
         }
         case buttonState::hovered:
         {
-            button.setRotation(0);
-            buttonText.setFillColor(textHover);
+            button.setTexture(hoverButton);
             break;
         }
         case buttonState::clicked:
         {
-            button.setRotation(180);
-            buttonText.setFillColor(textHover);
+            button.setTexture(clickButton);
             break;
         }
     }

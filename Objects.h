@@ -24,18 +24,18 @@ public:
     void initCoins(std::string coinFile);
     void moveCoins(sf::RenderWindow& window);
     // Button Init
-    void initButton(std::string s, std::string text, sf::Vector2f position, sf::Vector2f size, sf::Color color);
+    void initButton(std::string s, std::string text, sf::IntRect rect, sf::Vector2f position, sf::Vector2f size, sf::Color color);
     virtual void drawButton(sf::RenderTarget& target,sf::RenderStates states) const;
     void updateButton(sf::Event& e, sf::RenderWindow& window);
     sf::Uint32 getButtonState(){return btnState;};
     sf::Uint32 getObjState(){return objState;};
     sf::Vector2f getPosition(){return buttonPos;};
     // Sprite Animation
-    void animateSprite();
+    void animateSprite(Objects& object);
 
     sf::Sprite player, obst, coin, button;
-    sf::Texture playerTexture, obsTexture, coinTexture, buttonTexture;
-    sf::IntRect playerRect, coinRect;
+    sf::Texture playerTexture, obsTexture, coinTexture;
+    sf::IntRect playerRect, coinRect, buttonRect;
     sf::Uint32 objState, btnState;
     sf::Vector2f buttonPos;
     sf::Color buttonColor, textNormal, textHover;
@@ -52,7 +52,10 @@ public:
     sf::RectangleShape background[5], backgroundDupe[5];
     sf::Texture backTexture[5];
     float backgroundX[5], backgroundDupeX[5];
-    float speeds[5] = {1.0, 0.9, 0.8, 0.7, 0.6};
+    float speeds[5] = {0.9, 0.8, 0.7, 0.6, 0.5};
+
+    // Button Variables
+    sf::Texture normalButton, hoverButton, clickButton;
 
 };
 

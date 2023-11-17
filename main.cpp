@@ -26,9 +26,9 @@ int main()
     positionStart.x = WINDOW_SIZE_X/2;
     positionStart.y = WINDOW_SIZE_Y/2;
     sf::Vector2f sizeStart;
-    sizeStart.x = 0.5;
-    sizeStart.y = 0.5;
-    startButton.initButton("assets/button.png", "Start", positionStart, sizeStart, sf::Color::Red);
+    sizeStart.x = 10;
+    sizeStart.y = 10;
+    startButton.initButton("assets/Button.png", "Start", buttonRect, positionStart, sizeStart, sf::Color::Red);
 
     while(game.gameRunning())
     {

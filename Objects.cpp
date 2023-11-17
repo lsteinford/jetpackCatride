@@ -11,7 +11,7 @@ void Objects::initBackground(int width, int height)
 {
     // Randomize City Background
     sf::Time time = clock.restart();
-    int randCity = 1 + static_cast<int>(time.asMicroseconds()) % 5;
+    int randCity = 1 + static_cast<int>(time.asMicroseconds()) % 7;
 
     for(int i = 0; i < 5; i++)
     {

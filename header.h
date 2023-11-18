@@ -2,12 +2,10 @@
 #define HEADER_H
 
 #include <iostream>
-// #include <time.h>
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "Game.h"
 #include "Objects.h"
-// #include "button.h"
 
 const double frameRate = 30.0;
 const double frameTime = 1.0 / frameRate;

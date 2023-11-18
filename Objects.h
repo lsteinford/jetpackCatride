@@ -52,7 +52,7 @@ public:
     sf::RectangleShape background[5], backgroundDupe[5];
     sf::Texture backTexture[5];
     float backgroundX[5], backgroundDupeX[5];
-    float speeds[5] = {0.9, 0.8, 0.7, 0.6, 0.5};
+    float speeds[5] = {2.0, 1.7, 1.4, 1.1, 0.8};
 
     // Button Variables
     sf::Texture normalButton, hoverButton, clickButton;

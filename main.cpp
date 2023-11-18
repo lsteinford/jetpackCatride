@@ -33,14 +33,8 @@ int main()
     while(game.gameRunning())
     {
         game.events();
-        sf::Time gameTime = game.clock.restart();
-        double deltaTime = gameTime.asSeconds();
-        sf::Clock clock;
-        sf::Time elapsed = clock.restart();
-        if (elapsed.asMilliseconds() < 10) {
-            sf::sleep(sf::milliseconds(10) - elapsed);
-            elapsed = clock.restart();
-        }
+        
+        double deltaTime = frameTime;
 
         if(startGame == false)
         {

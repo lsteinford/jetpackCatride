@@ -9,6 +9,9 @@
 #include "Objects.h"
 // #include "button.h"
 
+const double frameRate = 30.0;
+const double frameTime = 1.0 / frameRate;
+
 const int WINDOW_SIZE_X = 1200;
 const int WINDOW_SIZE_Y = 675;
 

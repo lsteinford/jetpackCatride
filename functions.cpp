@@ -25,7 +25,7 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
         if(startButton.getButtonState() == clicked)
         {
             startGame = true;
-            // break;
+            break;
         }
     }
 }

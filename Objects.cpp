@@ -262,6 +262,18 @@ void Objects::initButton(std::string s, std::string text, sf::IntRect rect, sf::
 }
 
 /**
+ * @brief Draw Button
+ * 
+ * @param target 
+ * @param states 
+ */
+void Objects::drawButton(sf::RenderTarget& target,sf::RenderStates states) const
+{
+    target.draw(button, states);
+    // target.draw(buttonText, states);
+}
+
+/**
  * @brief Detect if mouse is over button
  * 
  * @param e 

@@ -31,7 +31,7 @@ public:
     sf::Uint32 getObjState(){return objState;};
     sf::Vector2f getPosition(){return buttonPos;};
     // Sprite Animation
-    void animateSprite(Objects& object);
+    void animateSprite();
 
     sf::Sprite player, obst, coin, button;
     sf::Texture playerTexture, obsTexture, coinTexture;

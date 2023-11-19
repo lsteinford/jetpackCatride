@@ -184,27 +184,34 @@ void Objects::moveCoins(sf::RenderWindow& window)
  * @brief Animates sprites for coins and player
  * 
  */
-void Objects::animateSprite(Objects& object)
+void Objects::animateSprite()
 {
-
     sf::Time elapsed = clock.getElapsedTime();
     double elapsedTime = elapsed.asSeconds();
 
-    if(object.getObjState() == objState::player)
+    std::cout << elapsedTime << std::endl;
+    
+    
+    if(this->getObjState() == objState::player)
     {
-       if(elapsedTime > 0.08f)
+       if(elapsedTime > 0.1f)
         {
-            if(playerRect.left == 128)
-            {
+            if(playerRect.top == 0 && playerRect.left == 576){
+                playerRect.left = 0;
+            } else if(playerRect.top == 144 && playerRect.left == 192){
+                playerRect.left = 0;
+            } else if(playerRect.top == 192 && playerRect.left == 128){
                 playerRect.left = 0;
             } else {
                 playerRect.left += 64;
             }
 
             player.setTextureRect(playerRect);
+
+            clock.restart();
             
         }
-    } else if(object.getObjState() == objState::coin){
+    } else if(this->getObjState() == objState::coin){
         
         if(elapsedTime > 0.07f)
             {
@@ -216,9 +223,10 @@ void Objects::animateSprite(Objects& object)
                 }
 
                 coin.setTextureRect(coinRect);
+                clock.restart();
             }
     }
-    clock.restart();
+    // clock.restart();
 }
 
 // BUTTON FUNCTIONS
@@ -251,18 +259,6 @@ void Objects::initButton(std::string s, std::string text, sf::IntRect rect, sf::
     button.setScale(size);
 
     btnState = buttonState::normal;
-}
-
-/**
- * @brief Draw Button
- * 
- * @param target 
- * @param states 
- */
-void Objects::drawButton(sf::RenderTarget& target,sf::RenderStates states) const
-{
-    target.draw(button, states);
-    target.draw(buttonText, states);
 }
 
 /**

@@ -14,7 +14,7 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
         }
         game.drawSprite(Player.player);
         game.drawSprite(startButton.button);
-        Player.animateSprite(Player);
+        Player.animateSprite();
         
         startButton.updateButton(game.e, game.window);
 
@@ -25,7 +25,7 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
         if(startButton.getButtonState() == clicked)
         {
             startGame = true;
-            break;
+            // break;
         }
     }
 }
@@ -34,19 +34,19 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
 {
     while(startGame == true && failedGame == false)
     {
-        game.events();
         game.clear();
+        Background.moveBackground(deltaTime, WINDOW_SIZE_X);
         for(int i = 0; i < 5; i++)
         {
             game.drawRect(Background.background[i]);
             game.drawRect(Background.backgroundDupe[i]);
         }
         game.drawSprite(Player.player);
-        Player.animateSprite(Player);
-        Background.moveBackground(deltaTime, WINDOW_SIZE_X);
+        Player.animateSprite();
+        
         Player.movePlayer(game.window);
         
-        
+        game.events();
 
     }
 }

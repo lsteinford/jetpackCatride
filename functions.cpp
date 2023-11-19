@@ -15,6 +15,7 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
         game.drawSprite(Player.player);
         game.drawSprite(startButton.button);
         Player.animateSprite();
+        Player.movePlayer(game.window);
         
         startButton.updateButton(game.e, game.window);
 
@@ -25,7 +26,7 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
         if(startButton.getButtonState() == clicked)
         {
             startGame = true;
-            break;
+            // break;
         }
     }
 }
@@ -42,9 +43,15 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
             game.drawRect(Background.backgroundDupe[i]);
         }
         game.drawSprite(Player.player);
+        game.drawSprite(Obstacles.obst);
+        game.drawSprite(Coins.coin);
+        Obstacles.moveObstacles(game.window);
+        Coins.moveCoins(game.window);
         Player.animateSprite();
         
+        
         Player.movePlayer(game.window);
+        game.display();
         
         game.events();
 

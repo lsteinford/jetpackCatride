@@ -15,7 +15,7 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
         game.drawSprite(Player.player);
         game.drawSprite(startButton.button);
         Player.animateSprite();
-        Player.movePlayer(game.window);
+        // Player.movePlayer(game.window);
         
         startButton.updateButton(game.e, game.window);
 
@@ -45,13 +45,14 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
         game.drawSprite(Player.player);
         game.drawSprite(Obstacles.obst);
         game.drawSprite(Coins.coin);
-        Obstacles.moveObstacles(game.window);
-        Coins.moveCoins(game.window);
+        Obstacles.moveObstacles(game.window, deltaTime);
+        Coins.moveCoins(game.window, deltaTime);
         Player.animateSprite();
+        Coins.animateSprite();
         
-        
-        Player.movePlayer(game.window);
         game.display();
+        Player.movePlayer(game.window);
+        
         
         game.events();
 

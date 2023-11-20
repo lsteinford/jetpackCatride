@@ -135,7 +135,7 @@ void Objects::initObstacles(std::string obstFile)
  * 
  * @param window 
  */
-void Objects::moveObstacles(sf::RenderWindow& window)
+void Objects::moveObstacles(sf::RenderWindow& window, double dt)
 {
     sf::Vector2f position = obst.getPosition();
     
@@ -144,6 +144,7 @@ void Objects::moveObstacles(sf::RenderWindow& window)
         sf::Time time = sf::seconds(0.1f);
         obst.setPosition(900, (rand() % 901));
     }
+    obst.move((-3 * dt), 0);
     window.draw(obst);
 }
 
@@ -153,11 +154,13 @@ void Objects::moveObstacles(sf::RenderWindow& window)
  * 
  * @param coinFile 
  */
-void Objects::initCoins(std::string coinFile)
+void Objects::initCoins(std::string coinFile, sf::IntRect rect)
 {
     coinSize = 4;
+    coinRect = rect;
     coinTexture.loadFromFile(coinFile);
     coin.setTexture(coinTexture);
+    coin.setTextureRect(rect);
     coin.setScale(sf::Vector2f(coinSize, coinSize));
     coin.setPosition(000, 000);
     objState = objState::coin;
@@ -168,7 +171,7 @@ void Objects::initCoins(std::string coinFile)
  * 
  * @param window 
  */
-void Objects::moveCoins(sf::RenderWindow& window)
+void Objects::moveCoins(sf::RenderWindow& window, double dt)
 {
     sf::Vector2f position = coin.getPosition();
     
@@ -177,6 +180,7 @@ void Objects::moveCoins(sf::RenderWindow& window)
         sf::Time time = sf::seconds(0.1f);
         coin.setPosition(900, (rand() % 901));
     }
+    coin.move((-3 * dt), 0);
     window.draw(coin);
 }
 
@@ -188,9 +192,6 @@ void Objects::animateSprite()
 {
     sf::Time elapsed = clock.getElapsedTime();
     double elapsedTime = elapsed.asSeconds();
-
-    std::cout << elapsedTime << std::endl;
-    
     
     if(this->getObjState() == objState::player)
     {
@@ -213,7 +214,7 @@ void Objects::animateSprite()
         }
     } else if(this->getObjState() == objState::coin){
         
-        if(elapsedTime > 0.07f)
+        if(elapsedTime > 0.1f)
             {
                 if(coinRect.left == 54)
                 {

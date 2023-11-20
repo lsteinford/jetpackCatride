@@ -19,10 +19,10 @@ public:
     void movePlayer(sf::RenderWindow &window);
     // Obstacle Init
     void initObstacles(std::string obstFile);
-    void moveObstacles(sf::RenderWindow& window);
+    void moveObstacles(sf::RenderWindow& window, double dt);
     // Coin Init
-    void initCoins(std::string coinFile);
-    void moveCoins(sf::RenderWindow& window);
+    void initCoins(std::string coinFile, sf::IntRect rect);
+    void moveCoins(sf::RenderWindow& window, double dt);
     // Button Init
     void initButton(std::string s, std::string text, sf::IntRect rect, sf::Vector2f position, sf::Vector2f size, sf::Color color);
     virtual void drawButton(sf::RenderTarget& target,sf::RenderStates states) const;

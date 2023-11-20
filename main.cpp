@@ -17,7 +17,7 @@ int main()
 
     Player.initPlayer("assets/superCatAnimation.png", playerRect);
     Obstacle.initObstacles("assets/villiandoge.png");
-    Coin.initCoins("assets/goldcoin1.png");
+    Coin.initCoins("assets/goldcoin1.png", coinRect);
 
     Background.initBackground(WINDOW_SIZE_X, WINDOW_SIZE_Y);
 

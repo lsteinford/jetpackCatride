@@ -65,8 +65,6 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
         game.display();
         Player.movePlayer(game.window);
         
-        
-        
 
     }
 }

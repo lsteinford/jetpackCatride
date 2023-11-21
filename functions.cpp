@@ -4,7 +4,19 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
 {
     while(startGame == false)
     {
-        
+        game.events();
+        sf::Text title;
+        sf::Font font;
+        font.loadFromFile("assets/Superdie.otf");
+        title.setFont(font);
+        title.setString("SuperCat JoyGlide");
+        title.setScale(2.5f, 2.5f);
+        title.setFillColor(sf::Color::Black);
+        sf::FloatRect textBox = title.getLocalBounds();
+        title.setOrigin(textBox.width / 2, textBox.height / 2);
+        title.setPosition(WINDOW_SIZE_X / 2, WINDOW_SIZE_Y / 4);
+
+
         game.clear();
         Background.moveBackground(deltaTime, WINDOW_SIZE_X);
         for(int i = 0; i < 5; i++)
@@ -14,12 +26,11 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
         }
         game.drawSprite(Player.player);
         game.drawSprite(startButton.button);
+        game.drawText(title);
         Player.animateSprite();
         // Player.movePlayer(game.window);
         
         startButton.updateButton(game.e, game.window);
-
-        game.events();
 
         game.display();
 
@@ -35,7 +46,8 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
 {
     while(startGame == true && failedGame == false)
     {
-        game.clear();
+        game.events();
+        // game.clear();
         Background.moveBackground(deltaTime, WINDOW_SIZE_X);
         for(int i = 0; i < 5; i++)
         {
@@ -45,8 +57,8 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
         game.drawSprite(Player.player);
         game.drawSprite(Obstacles.obst);
         game.drawSprite(Coins.coin);
-        Obstacles.moveObstacles(game.window, deltaTime);
-        Coins.moveCoins(game.window, deltaTime);
+        Obstacles.moveObstacles(game.window, deltaTime, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+        Coins.moveCoins(game.window, deltaTime, WINDOW_SIZE_X, WINDOW_SIZE_Y);
         Player.animateSprite();
         Coins.animateSprite();
         
@@ -54,7 +66,7 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
         Player.movePlayer(game.window);
         
         
-        game.events();
+        
 
     }
 }

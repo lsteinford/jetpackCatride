@@ -70,7 +70,7 @@ void Objects::moveBackground(double dt, int width)
 void Objects::initPlayer(std::string playerFile, sf::IntRect rect)
 {
     playerX = 200;
-    playerY = 200;
+    playerY = 300;
     playerSizeX = 3;
     playerSizeY = 3;
     playerRect = rect;
@@ -93,10 +93,8 @@ void Objects::initPlayer(std::string playerFile, sf::IntRect rect)
  */
 void Objects::movePlayer(sf::RenderWindow &window)
 {
-    sf::Vector2f moveUp;
     moveUp.x = 0;
     moveUp.y = -0.1;
-    sf::Vector2f moveDown;
     moveDown.x = 0;
     moveDown.y = 0.05;
 
@@ -135,14 +133,17 @@ void Objects::initObstacles(std::string obstFile)
  * 
  * @param window 
  */
-void Objects::moveObstacles(sf::RenderWindow& window, double dt)
+void Objects::moveObstacles(sf::RenderWindow& window, double dt, int width, int height)
 {
     sf::Vector2f position = obst.getPosition();
+
+    sf::Time elapsed = clock.getElapsedTime();
+    int elapsedTime = elapsed.asMilliseconds();
     
     if(position.x<0){
-        srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
-        sf::Time time = sf::seconds(0.1f);
-        obst.setPosition(900, (rand() % 901));
+        // srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
+        // sf::Time time = sf::seconds(0.1f);
+        obst.setPosition(width, (elapsedTime % height));
     }
     obst.move((-3 * dt), 0);
     window.draw(obst);
@@ -171,14 +172,17 @@ void Objects::initCoins(std::string coinFile, sf::IntRect rect)
  * 
  * @param window 
  */
-void Objects::moveCoins(sf::RenderWindow& window, double dt)
+void Objects::moveCoins(sf::RenderWindow& window, double dt, int width, int height)
 {
     sf::Vector2f position = coin.getPosition();
+
+    sf::Time elapsed = clock.getElapsedTime();
+    int elapsedTime = elapsed.asMilliseconds();
     
     if(position.x<0){
-        srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
-        sf::Time time = sf::seconds(0.1f);
-        coin.setPosition(900, (rand() % 901));
+        // srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
+        // sf::Time time = sf::seconds(0.1f);
+        coin.setPosition(width, (elapsedTime % height));
     }
     coin.move((-3 * dt), 0);
     window.draw(coin);

@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-enum objState{coin, player};
+enum objState{coin, player, obstacle};
 enum buttonState{normal, hovered, clicked};
 
 class Objects
@@ -19,10 +19,10 @@ public:
     void movePlayer(sf::RenderWindow &window);
     // Obstacle Init
     void initObstacles(std::string obstFile);
-    void moveObstacles(sf::RenderWindow& window, double dt);
+    void moveObstacles(sf::RenderWindow& window, double dt, int width, int height);
     // Coin Init
     void initCoins(std::string coinFile, sf::IntRect rect);
-    void moveCoins(sf::RenderWindow& window, double dt);
+    void moveCoins(sf::RenderWindow& window, double dt, int width, int height);
     // Button Init
     void initButton(std::string s, std::string text, sf::IntRect rect, sf::Vector2f position, sf::Vector2f size, sf::Color color);
     virtual void drawButton(sf::RenderTarget& target,sf::RenderStates states) const;
@@ -56,6 +56,9 @@ public:
 
     // Button Variables
     sf::Texture normalButton, hoverButton, clickButton;
+
+    // Player Variables
+    sf::Vector2f moveUp, moveDown;
 
 };
 

@@ -2,7 +2,7 @@
 
 int main()
 {
-    Game game(WINDOW_SIZE_X, WINDOW_SIZE_Y, "Jetpack Catride");
+    Game game(WINDOW_SIZE_X, WINDOW_SIZE_Y, "SuperCat JoyGlide");
 
     Objects start;
     Objects Background;

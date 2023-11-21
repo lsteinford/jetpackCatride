@@ -54,11 +54,11 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
             game.drawRect(Background.background[i]);
             game.drawRect(Background.backgroundDupe[i]);
         }
-        game.drawSprite(Player.player);
         game.drawSprite(Obstacles.obst);
         game.drawSprite(Coins.coin);
         Obstacles.moveObstacles(game.window, deltaTime, WINDOW_SIZE_X, WINDOW_SIZE_Y);
         Coins.moveCoins(game.window, deltaTime, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+        game.drawSprite(Player.player);
         Player.animateSprite();
         Coins.animateSprite();
         

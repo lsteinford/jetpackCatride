@@ -203,9 +203,9 @@ void Objects::animateSprite()
         {
             if(playerRect.top == 0 && playerRect.left == 576){
                 playerRect.left = 0;
-            } else if(playerRect.top == 144 && playerRect.left == 128){
+            } else if(playerRect.top == 144 && playerRect.left >= 192){
                 playerRect.left = 0;
-            } else if(playerRect.top == 192 && playerRect.left == 128){
+            } else if(playerRect.top == 192 && playerRect.left >= 128){
                 playerRect.left = 0;
             } else {
                 playerRect.left += 64;

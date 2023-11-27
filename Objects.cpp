@@ -102,12 +102,12 @@ void Objects::movePlayer(sf::RenderWindow &window)
     {
         
         player.move(moveUp);
-        playerRect.top = 192;
+        playerRect.top = 196;
     }
     else
     {
         player.move(moveDown);
-        playerRect.top = 144;
+        playerRect.top = 148;
     }
     window.draw(player);
 }
@@ -118,14 +118,22 @@ void Objects::movePlayer(sf::RenderWindow &window)
  * 
  * @param obstFile 
  */
-void Objects::initObstacles(std::string obstFile)
+void Objects::initObstacles(std::string obstFile, sf::IntRect rect)
 {
-    obstSizeX = 1;
-    obstSizeY = 1;
-    obsTexture.loadFromFile(obstFile);
-    obst.setTexture(obsTexture);
-    obst.setScale(sf::Vector2f(obstSizeX, obstSizeY));
-    obst.setPosition(000, 000);
+    obstSize = 0.5;
+    obstRect = rect;
+
+    obstSprite.setOrigin(obstRect.width / 2.0f, obstRect.height / 2.0f);
+    obstSprite.setPosition(0,0);
+    obstSprite.setScale(obstSize, obstSize);
+
+    obstTexture.loadFromFile(obstFile);
+    obstSprite.setTexture(obstTexture);
+    obstSprite.setTextureRect(obstRect); 
+    obstHitBox.setRadius(obstSize);
+    obstHitBox.setPosition(obstSprite.getPosition().x, obstSprite.getPosition().y);
+
+    // std::cout << "Obst Rect: " << obstRect.top << ", " << obstRect.left << ", " << obstRect.width << ", " << obstRect.height << std::endl;
 }
 
 /**
@@ -135,7 +143,7 @@ void Objects::initObstacles(std::string obstFile)
  */
 void Objects::moveObstacles(sf::RenderWindow& window, double dt, int width, int height)
 {
-    sf::Vector2f position = obst.getPosition();
+    sf::Vector2f position = obstSprite.getPosition();
 
     sf::Time elapsed = clock.getElapsedTime();
     int elapsedTime = elapsed.asMilliseconds();
@@ -143,10 +151,12 @@ void Objects::moveObstacles(sf::RenderWindow& window, double dt, int width, int 
     if(position.x<0){
         // srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
         // sf::Time time = sf::seconds(0.1f);
-        obst.setPosition(width, (elapsedTime % height));
+        obstSprite.setPosition(width, (elapsedTime % height));
+        obstHitBox.setPosition(width, (elapsedTime % height));
     }
-    obst.move((-3 * dt), 0);
-    window.draw(obst);
+    obstSprite.move((-5 * dt), 0);
+    obstHitBox.move((-5 * dt), 0);
+    window.draw(obstSprite);
 }
 
 // COIN FUNCTIONS
@@ -184,7 +194,7 @@ void Objects::moveCoins(sf::RenderWindow& window, double dt, int width, int heig
         // sf::Time time = sf::seconds(0.1f);
         coin.setPosition(width, (elapsedTime % height));
     }
-    coin.move((-3 * dt), 0);
+    coin.move((-8 * dt), 0);
     window.draw(coin);
 }
 
@@ -201,12 +211,12 @@ void Objects::animateSprite()
     {
        if(elapsedTime > 0.1f)
         {
-            if(playerRect.top == 0 && playerRect.left == 576){
-                playerRect.left = 0;
-            } else if(playerRect.top == 144 && playerRect.left >= 192){
-                playerRect.left = 0;
-            } else if(playerRect.top == 192 && playerRect.left >= 128){
-                playerRect.left = 0;
+            if(playerRect.top == 4 && playerRect.left >= 585){
+                playerRect.left = 9;
+            } else if(playerRect.top == 148 && playerRect.left >= 201){
+                playerRect.left = 9;
+            } else if(playerRect.top == 196 && playerRect.left >= 137){
+                playerRect.left = 9;
             } else {
                 playerRect.left += 64;
             }

@@ -46,6 +46,11 @@ void Game::drawSprite(sf::Sprite sprite)
     window.draw(sprite);
 }
 
+void Game::drawCircle(sf::CircleShape& circ)
+{
+    window.draw(circ);
+}
+
 void Game::clear()
 {
     window.clear();

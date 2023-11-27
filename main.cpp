@@ -11,12 +11,13 @@ int main()
     Objects Obstacle;
     Objects startButton;
     
+    int score = 0;
 
     bool startGame = false;
     bool failedGame = false;
 
     Player.initPlayer("assets/superCatAnimation.png", playerRect);
-    Obstacle.initObstacles("assets/villiandoge.png");
+    Obstacle.initObstacles("assets/villiandoge.png", obstRect);
     Coin.initCoins("assets/goldcoin1.png", coinRect);
 
     Background.initBackground(WINDOW_SIZE_X, WINDOW_SIZE_Y);
@@ -42,11 +43,11 @@ int main()
         }
         if(startGame == true && failedGame == false)
         {
-            gameRun(startGame, failedGame, game, Background, Player, Obstacle, Coin, deltaTime);
+            gameRun(startGame, failedGame, game, Background, Player, Obstacle, Coin, deltaTime, score);
         }
         if(failedGame)
         {
-            deathScreen();
+            deathScreen(startGame, failedGame, game, Background, startButton, deltaTime);
         }
 
     }

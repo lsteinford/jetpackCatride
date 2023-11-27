@@ -16,6 +16,7 @@ public:
     void drawText(sf::Text& t);
     void drawRect(sf::RectangleShape& rect);
     void drawSprite(sf::Sprite sprite);
+    void drawCircle(sf::CircleShape& circ);
     void clear();
     sf::Event e;
     sf::RenderWindow window;

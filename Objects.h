@@ -26,7 +26,8 @@ public:
     // Coin Functions
     void initCoins(std::string coinFile, sf::IntRect rect);
     void moveCoins(sf::RenderWindow& window, double dt, int width, int height);
-    
+    void coinCollide(int& score, int width, int height);
+
     // Button Functions
     void initButton(std::string s, std::string text, sf::IntRect rect, sf::Vector2f position, sf::Vector2f size, sf::Color color);
     virtual void drawButton(sf::RenderTarget& target,sf::RenderStates states) const;

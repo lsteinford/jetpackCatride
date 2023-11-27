@@ -83,7 +83,7 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
             failedGame = true;
         }
         if(playerBounds.intersects(coinBounds) == true){
-            score++;
+            Coins.coinCollide(score, WINDOW_SIZE_X, WINDOW_SIZE_Y);
         }
         
         game.display();

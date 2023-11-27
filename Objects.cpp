@@ -198,6 +198,14 @@ void Objects::moveCoins(sf::RenderWindow& window, double dt, int width, int heig
     window.draw(coin);
 }
 
+void Objects::coinCollide(int& score, int width, int height)
+{
+    score += 100;
+    sf::Time elapsed = clock.getElapsedTime();
+    int elapsedTime = elapsed.asMilliseconds();
+    coin.setPosition(width, (elapsedTime % height));
+}
+
 /**
  * @brief Animates sprites for coins and player
  * 

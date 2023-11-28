@@ -133,6 +133,7 @@ void Objects::movePlayer(sf::RenderWindow &window, int height)
  */
 void Objects::initObstacles(std::string obstFile, sf::IntRect rect)
 {
+    velocity = 1;
     obstSize = 0.5;
     obstRect = rect;
 
@@ -169,8 +170,8 @@ void Objects::moveObstacles(sf::RenderWindow& window, double dt, int width, int 
         obstHitBox.setPosition(width, (elapsedTime % height - obstBounds.height));
         clock.restart();
     }
-    obstSprite.move((-5 * dt), 0);
-    obstHitBox.move((-5 * dt), 0);
+    obstSprite.move(((-5 * dt)*velocity), 0);
+    obstHitBox.move(((-5 * dt)*velocity), 0);
     window.draw(obstSprite);
 }
 

@@ -68,6 +68,7 @@ public:
     sf::IntRect obstRect;
     sf::Texture obstTexture;
     float obstSize;
+    float velocity;
     
 
     // Coin Variables

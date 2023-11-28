@@ -91,12 +91,14 @@ void Objects::initPlayer(std::string playerFile, sf::IntRect rect)
  * @param event 
  * @param isKeyPressed 
  */
-void Objects::movePlayer(sf::RenderWindow &window)
+void Objects::movePlayer(sf::RenderWindow &window, int height)
 {
     moveUp.x = 0;
-    moveUp.y = -0.1;
+    moveUp.y = -0.25;
     moveDown.x = 0;
-    moveDown.y = 0.05;
+    moveDown.y = 0.15;
+    idle.x = 0;
+    idle.y = 0;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
     {
@@ -109,6 +111,17 @@ void Objects::movePlayer(sf::RenderWindow &window)
         player.move(moveDown);
         playerRect.top = 148;
     }
+
+    sf::FloatRect playerBounds = player.getGlobalBounds();
+    if (playerBounds.top + playerBounds.height >= height)
+    {
+        player.setPosition(player.getPosition().x, height - playerBounds.height);
+        playerRect.top = 4;
+    } else if (playerBounds.top <= 0){
+        player.setPosition(player.getPosition().x, 0);
+        playerRect.top = 4;
+    }
+
     window.draw(player);
 }
 
@@ -198,6 +211,13 @@ void Objects::moveCoins(sf::RenderWindow& window, double dt, int width, int heig
     window.draw(coin);
 }
 
+/**
+ * @brief Resets coin position and adds to score
+ * 
+ * @param score 
+ * @param width 
+ * @param height 
+ */
 void Objects::coinCollide(int& score, int width, int height)
 {
     score += 100;

@@ -17,7 +17,7 @@ public:
     
     // Player Functions
     void initPlayer(std::string playerFile, sf::IntRect rect);
-    void movePlayer(sf::RenderWindow &window);
+    void movePlayer(sf::RenderWindow &window, int height);
     
     // Obstacle Functions
     void initObstacles(std::string obstFile, sf::IntRect rect);
@@ -58,7 +58,7 @@ public:
     // Player Variables
     sf::Sprite player;
     sf::Texture playerTexture;
-    sf::Vector2f moveUp, moveDown;
+    sf::Vector2f moveUp, moveDown, idle;
     int playerX, playerY, playerSizeX, playerSizeY;
     sf::IntRect playerRect;
 

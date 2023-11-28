@@ -74,7 +74,7 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
         Coins.animateSprite();
         
         
-        Player.movePlayer(game.window);
+        Player.movePlayer(game.window, WINDOW_SIZE_Y);
 
         sf::FloatRect obstBounds = Obstacles.obstHitBox.getGlobalBounds();
         sf::FloatRect coinBounds = Coins.coin.getGlobalBounds();

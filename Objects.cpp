@@ -207,7 +207,7 @@ void Objects::moveCoins(sf::RenderWindow& window, double dt, int width, int heig
         // sf::Time time = sf::seconds(0.1f);
         coin.setPosition(width, (elapsedTime % height));
     }
-    coin.move((-8 * dt), 0);
+    coin.move((-6 * dt), 0);
     window.draw(coin);
 }
 

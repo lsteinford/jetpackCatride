@@ -52,7 +52,7 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
         scoreFont.loadFromFile("assets/Superdie.otf");
         scoreText.setFont(scoreFont);
         scoreText.setString("Score: " + std::to_string(score));
-        scoreText.setScale(2.0f, 2.0f);
+        scoreText.setScale(0.75f, 0.75f);
         scoreText.setFillColor(sf::Color::Black);
         scoreText.setPosition(1, 1);
         // game.clear();

@@ -159,13 +159,15 @@ void Objects::moveObstacles(sf::RenderWindow& window, double dt, int width, int 
     sf::Vector2f position = obstSprite.getPosition();
 
     sf::Time elapsed = clock.getElapsedTime();
-    int elapsedTime = elapsed.asMilliseconds();
+    int elapsedTime = elapsed.asMicroseconds();
+    sf::FloatRect obstBounds = coin.getGlobalBounds();
     
-    if(position.x<0){
+    if(position.x <= 0){
         // srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
         // sf::Time time = sf::seconds(0.1f);
-        obstSprite.setPosition(width, (elapsedTime % height));
-        obstHitBox.setPosition(width, (elapsedTime % height));
+        obstSprite.setPosition(width, (elapsedTime % height - obstBounds.height));
+        obstHitBox.setPosition(width, (elapsedTime % height - obstBounds.height));
+        clock.restart();
     }
     obstSprite.move((-5 * dt), 0);
     obstHitBox.move((-5 * dt), 0);
@@ -200,12 +202,14 @@ void Objects::moveCoins(sf::RenderWindow& window, double dt, int width, int heig
     sf::Vector2f position = coin.getPosition();
 
     sf::Time elapsed = clock.getElapsedTime();
-    int elapsedTime = elapsed.asMilliseconds();
+    int elapsedTime = elapsed.asMicroseconds();
+    sf::FloatRect coinBounds = coin.getGlobalBounds();
     
-    if(position.x<0){
+    if(position.x <= 0){
         // srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
         // sf::Time time = sf::seconds(0.1f);
-        coin.setPosition(width, (elapsedTime % height));
+        coin.setPosition(width, (elapsedTime % height - coinBounds.height));
+        clock.restart();
     }
     coin.move((-6 * dt), 0);
     window.draw(coin);
@@ -222,8 +226,9 @@ void Objects::coinCollide(int& score, int width, int height)
 {
     score += 100;
     sf::Time elapsed = clock.getElapsedTime();
-    int elapsedTime = elapsed.asMilliseconds();
+    int elapsedTime = elapsed.asMicroseconds();
     coin.setPosition(width, (elapsedTime % height));
+    clock.restart();
 }
 
 /**

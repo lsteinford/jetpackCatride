@@ -33,9 +33,13 @@ int main()
 
     while(game.gameRunning())
     {
+        sf::Clock clock; // starts the clock
+        sf::Time timeSinceLastUpdate = sf::Time::Zero;
+
         game.events();
-        
+
         double deltaTime = frameTime;
+        timeSinceLastUpdate -= TIME_PER_FRAME;
 
         if(startGame == false)
         {
@@ -43,13 +47,12 @@ int main()
         }
         if(startGame == true && failedGame == false)
         {
-            gameRun(startGame, failedGame, game, Background, Player, Obstacle, Coin, deltaTime, score);
+            gameRun(startGame, failedGame, game, Background, Player, Obstacle, Coin, deltaTime, score, clock, timeSinceLastUpdate);
         }
         if(failedGame)
         {
             deathScreen(startGame, failedGame, game, Background, startButton, deltaTime);
         }
-
     }
 
     return 0;

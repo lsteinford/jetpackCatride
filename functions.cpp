@@ -2,6 +2,7 @@
 
 void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background, Objects startButton, double deltaTime)
 {
+    
     while(startGame == false)
     {
         game.events();
@@ -40,53 +41,59 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
     }
 }
 
-void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obstacles, Objects& Coins, double deltaTime, int score)
+void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obstacles, Objects& Coins, double deltaTime, int score, sf::Clock& clock, sf::Time& timeSinceLastUpdate)
 {
     while(startGame == true && failedGame == false)
     {
         game.events();
-
-        sf::Text scoreText;
-        sf::Font scoreFont;
-        
-        scoreFont.loadFromFile("assets/Superdie.otf");
-        scoreText.setFont(scoreFont);
-        scoreText.setString("Score: " + std::to_string(score));
-        scoreText.setScale(0.75f, 0.75f);
-        scoreText.setFillColor(sf::Color::Black);
-        scoreText.setPosition(1, 1);
-        // game.clear();
-        Background.moveBackground(deltaTime, WINDOW_SIZE_X);
-        for(int i = 0; i < 5; i++)
+        timeSinceLastUpdate += clock.restart();
+        while (timeSinceLastUpdate > TIME_PER_FRAME)
         {
-            game.drawRect(Background.background[i]);
-            game.drawRect(Background.backgroundDupe[i]);
-        }
-        
-        game.drawSprite(Coins.coin);
-        game.drawSprite(Obstacles.obstSprite);
-        game.drawText(scoreText);
-        
-        Obstacles.moveObstacles(game.window, deltaTime, WINDOW_SIZE_X, WINDOW_SIZE_Y);
-        Coins.moveCoins(game.window, deltaTime, WINDOW_SIZE_X, WINDOW_SIZE_Y);
-        game.drawSprite(Player.player);
-        Player.animateSprite();
-        Coins.animateSprite();
-        
-        
-        Player.movePlayer(game.window, WINDOW_SIZE_Y);
 
-        sf::FloatRect obstBounds = Obstacles.obstHitBox.getGlobalBounds();
-        sf::FloatRect coinBounds = Coins.coin.getGlobalBounds();
-        sf::FloatRect playerBounds = Player.player.getGlobalBounds();
-        if (playerBounds.intersects(obstBounds) == true){
-            failedGame = true;
-        }
-        if(playerBounds.intersects(coinBounds) == true){
-            Coins.coinCollide(score, WINDOW_SIZE_X, WINDOW_SIZE_Y);
-        }
-        
+
+            sf::Text scoreText;
+            sf::Font scoreFont;
+
+            scoreFont.loadFromFile("assets/Superdie.otf");
+            scoreText.setFont(scoreFont);
+            scoreText.setString("Score: " + std::to_string(score));
+            scoreText.setScale(0.75f, 0.75f);
+            scoreText.setFillColor(sf::Color::Black);
+            scoreText.setPosition(1, 1);
+            // game.clear();
+            Background.moveBackground(deltaTime, WINDOW_SIZE_X);
+            for(int i = 0; i < 5; i++)
+            {
+                game.drawRect(Background.background[i]);
+                game.drawRect(Background.backgroundDupe[i]);
+            }
+            
+            game.drawSprite(Coins.coin);
+            game.drawSprite(Obstacles.obstSprite);
+            game.drawText(scoreText);
+            
+            Obstacles.moveObstacles(game.window, deltaTime, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+            Coins.moveCoins(game.window, deltaTime, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+            game.drawSprite(Player.player);
+            Player.animateSprite();
+            Coins.animateSprite();
+            
+            
+            Player.movePlayer(game.window, WINDOW_SIZE_Y);
+
+            sf::FloatRect obstBounds = Obstacles.obstHitBox.getGlobalBounds();
+            sf::FloatRect coinBounds = Coins.coin.getGlobalBounds();
+            sf::FloatRect playerBounds = Player.player.getGlobalBounds();
+            if (playerBounds.intersects(obstBounds) == true){
+                failedGame = true;
+            }
+            if(playerBounds.intersects(coinBounds) == true){
+                Coins.coinCollide(score, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+            }
+            timeSinceLastUpdate -= TIME_PER_FRAME;
         game.display();
+
+        }
     }
 }
 

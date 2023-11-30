@@ -16,30 +16,14 @@ int main()
     bool startGame = false;
     bool failedGame = false;
 
-    Player.initPlayer("assets/superCatAnimation.png", playerRect);
-    Obstacle.initObstacles("assets/villiandoge.png", obstRect);
-    Coin.initCoins("assets/goldcoin1.png", coinRect);
-
-    Background.initBackground(WINDOW_SIZE_X, WINDOW_SIZE_Y);
-
-    // Button initialization
-    sf::Vector2f positionStart;
-    positionStart.x = WINDOW_SIZE_X/2;
-    positionStart.y = WINDOW_SIZE_Y/2;
-    sf::Vector2f sizeStart;
-    sizeStart.x = 10;
-    sizeStart.y = 10;
-    startButton.initButton("assets/Button.png", "Start", buttonRect, positionStart, sizeStart, sf::Color::Red);
-
     while(game.gameRunning())
     {
         sf::Clock clock; // starts the clock
-        sf::Time timeSinceLastUpdate = sf::Time::Zero;
+        sf::Time deltaTime = sf::Time::Zero;
 
         game.events();
 
-        double deltaTime = frameTime;
-        timeSinceLastUpdate -= TIME_PER_FRAME;
+        deltaTime -= TIME_PER_FRAME;
 
         if(startGame == false)
         {
@@ -47,11 +31,11 @@ int main()
         }
         if(startGame == true && failedGame == false)
         {
-            gameRun(startGame, failedGame, game, Background, Player, Obstacle, Coin, deltaTime, score, clock, timeSinceLastUpdate);
+            gameRun(startGame, failedGame, game, Background, Player, Obstacle, Coin, score, clock, deltaTime);
         }
         if(failedGame)
         {
-            deathScreen(startGame, failedGame, game, Background, startButton, deltaTime);
+            deathScreen(startGame, failedGame, game, Background, startButton);
         }
     }
 

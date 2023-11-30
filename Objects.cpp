@@ -133,7 +133,7 @@ void Objects::movePlayer(sf::RenderWindow &window, int height)
  */
 void Objects::initObstacles(std::string obstFile, sf::IntRect rect)
 {
-    velocity = 1;
+    velocity = -3;
     obstSize = 0.5;
     obstRect = rect;
 
@@ -165,12 +165,12 @@ void Objects::moveObstacles(sf::RenderWindow& window, int width, int height)
     if(position.x <= 0){
         // srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
         // sf::Time time = sf::seconds(0.1f);
-        obstSprite.setPosition(width, (elapsedTime % height - obstBounds.height));
-        obstHitBox.setPosition(width, (elapsedTime % height - obstBounds.height));
+        obstSprite.setPosition(width + obstBounds.width, (elapsedTime % height - obstBounds.height));
+        obstHitBox.setPosition(width + obstBounds.width, (elapsedTime % height - obstBounds.height));
         clock.restart();
     }
-    obstSprite.move(((-3)*velocity), 0);
-    obstHitBox.move(((-3)*velocity), 0);
+    obstSprite.move((velocity), 0);
+    obstHitBox.move((velocity), 0);
     window.draw(obstSprite);
 }
 
@@ -182,6 +182,7 @@ void Objects::moveObstacles(sf::RenderWindow& window, int width, int height)
  */
 void Objects::initCoins(std::string coinFile, sf::IntRect rect)
 {
+    velocity = -4.5;
     coinSize = 4;
     coinRect = rect;
     coinTexture.loadFromFile(coinFile);
@@ -208,10 +209,10 @@ void Objects::moveCoins(sf::RenderWindow& window, int width, int height)
     if(position.x <= 0){
         // srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
         // sf::Time time = sf::seconds(0.1f);
-        coin.setPosition(width, (elapsedTime % height - coinBounds.height));
+        coin.setPosition(width + coinBounds.width, (elapsedTime % height - coinBounds.height));
         clock.restart();
     }
-    coin.move((-4.5), 0);
+    coin.move((velocity), 0);
     window.draw(coin);
 }
 

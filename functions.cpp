@@ -41,13 +41,11 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
         Player.animateSprite();
         
         startButton.updateButton(game.e, game.window);
-
-        game.display();
-
         if(startButton.getButtonState() == clicked)
         {
             startGame = true;
         }
+        game.display();
     }
 }
 
@@ -56,11 +54,13 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
     Obstacles.initObstacles("assets/villiandoge.png", obstRect);
     Coins.initCoins("assets/goldcoin1.png", coinRect);
     Player.initPlayer("assets/superCatAnimation.png", playerRect);
+
+    dt = clock.restart();
     while(startGame == true && failedGame == false)
     {
         game.events();
         dt += clock.restart();
-        while (dt > TIME_PER_FRAME)
+        while (dt >= TIME_PER_FRAME)
         {
 
 
@@ -104,8 +104,7 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
                 Coins.coinCollide(score, WINDOW_SIZE_X, WINDOW_SIZE_Y);
             }
             dt -= TIME_PER_FRAME;
-        game.display();
-
+            game.display();
         }
     }
 }

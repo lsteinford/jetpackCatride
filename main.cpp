@@ -15,15 +15,16 @@ int main()
 
     bool startGame = false;
     bool failedGame = false;
+    sf::Time deltaTime = sf::Time::Zero;
 
     while(game.gameRunning())
     {
         sf::Clock clock; // starts the clock
-        sf::Time deltaTime = sf::Time::Zero;
+        
 
         game.events();
 
-        deltaTime -= TIME_PER_FRAME;
+        deltaTime += clock.restart();
 
         if(startGame == false)
         {
@@ -31,6 +32,7 @@ int main()
         }
         if(startGame == true && failedGame == false)
         {
+            deltaTime += clock.restart();
             gameRun(startGame, failedGame, game, Background, Player, Obstacle, Coin, score, clock, deltaTime);
         }
         if(failedGame)

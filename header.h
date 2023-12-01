@@ -17,9 +17,9 @@ const sf::IntRect coinRect(0,0,9,9);
 const sf::IntRect buttonRect(167, 310, 405, 150); // Sprite sheet size: 2000x5645
 const sf::IntRect obstRect(0,0,222,222); // Sprite sheet size: 222x222;
 
-void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background, Objects startButton, sf::Time& dt);
+void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background, Objects startButton, sf::Time& dt, sf::Clock clock);
 void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obstacles, Objects& Coins, int score, sf::Clock& clock, sf::Time& dt);
-void deathScreen(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects startButton);
+void deathScreen(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects startButton, sf::Time dt, sf::Clock clock);
 
 
 #endif

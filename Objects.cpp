@@ -36,13 +36,13 @@ void Objects::initBackground(int width, int height)
  * @brief Move background images
  * 
  */
-void Objects::moveBackground(double dt, int width)
+void Objects::moveBackground(int width)
 {
 
     for(int i = 0; i < 5; i++)
     {
-        backgroundX[i] += speeds[i] * -dt;
-        backgroundDupeX[i] += speeds[i] * -dt;
+        backgroundX[i] -= speeds[i];
+        backgroundDupeX[i] -= speeds[i];
 
         if (backgroundX[i] <= -width)
         {
@@ -94,9 +94,9 @@ void Objects::initPlayer(std::string playerFile, sf::IntRect rect)
 void Objects::movePlayer(sf::RenderWindow &window, int height)
 {
     moveUp.x = 0;
-    moveUp.y = -0.25;
+    moveUp.y = -2;
     moveDown.x = 0;
-    moveDown.y = 0.15;
+    moveDown.y = 2.25;
     idle.x = 0;
     idle.y = 0;
 
@@ -133,7 +133,7 @@ void Objects::movePlayer(sf::RenderWindow &window, int height)
  */
 void Objects::initObstacles(std::string obstFile, sf::IntRect rect)
 {
-    velocity = 1;
+    velocity = -3;
     obstSize = 0.5;
     obstRect = rect;
 
@@ -147,7 +147,6 @@ void Objects::initObstacles(std::string obstFile, sf::IntRect rect)
     obstHitBox.setRadius(obstSize);
     obstHitBox.setPosition(obstSprite.getPosition().x, obstSprite.getPosition().y);
 
-    // std::cout << "Obst Rect: " << obstRect.top << ", " << obstRect.left << ", " << obstRect.width << ", " << obstRect.height << std::endl;
 }
 
 /**
@@ -155,7 +154,7 @@ void Objects::initObstacles(std::string obstFile, sf::IntRect rect)
  * 
  * @param window 
  */
-void Objects::moveObstacles(sf::RenderWindow& window, double dt, int width, int height)
+void Objects::moveObstacles(sf::RenderWindow& window, int width, int height)
 {
     sf::Vector2f position = obstSprite.getPosition();
 
@@ -166,12 +165,12 @@ void Objects::moveObstacles(sf::RenderWindow& window, double dt, int width, int 
     if(position.x <= 0){
         // srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
         // sf::Time time = sf::seconds(0.1f);
-        obstSprite.setPosition(width, (elapsedTime % height - obstBounds.height));
-        obstHitBox.setPosition(width, (elapsedTime % height - obstBounds.height));
+        obstSprite.setPosition(width + obstBounds.width, (elapsedTime % height - obstBounds.height));
+        obstHitBox.setPosition(width + obstBounds.width, (elapsedTime % height - obstBounds.height));
         clock.restart();
     }
-    obstSprite.move(((-5 * dt)*velocity), 0);
-    obstHitBox.move(((-5 * dt)*velocity), 0);
+    obstSprite.move((velocity), 0);
+    obstHitBox.move((velocity), 0);
     window.draw(obstSprite);
 }
 
@@ -183,6 +182,7 @@ void Objects::moveObstacles(sf::RenderWindow& window, double dt, int width, int 
  */
 void Objects::initCoins(std::string coinFile, sf::IntRect rect)
 {
+    velocity = -4.5;
     coinSize = 4;
     coinRect = rect;
     coinTexture.loadFromFile(coinFile);
@@ -198,7 +198,7 @@ void Objects::initCoins(std::string coinFile, sf::IntRect rect)
  * 
  * @param window 
  */
-void Objects::moveCoins(sf::RenderWindow& window, double dt, int width, int height)
+void Objects::moveCoins(sf::RenderWindow& window, int width, int height)
 {
     sf::Vector2f position = coin.getPosition();
 
@@ -209,10 +209,10 @@ void Objects::moveCoins(sf::RenderWindow& window, double dt, int width, int heig
     if(position.x <= 0){
         // srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
         // sf::Time time = sf::seconds(0.1f);
-        coin.setPosition(width, (elapsedTime % height - coinBounds.height));
+        coin.setPosition(width + coinBounds.width, (elapsedTime % height - coinBounds.height));
         clock.restart();
     }
-    coin.move((-6 * dt), 0);
+    coin.move((velocity), 0);
     window.draw(coin);
 }
 

@@ -9,7 +9,6 @@ class Game
 {
 public:
     Game(int winSizeX, int winSizeY, std::string gameName);
-    ~Game(){}
     void events();
     void display();
     bool gameRunning();

@@ -13,7 +13,7 @@ class Objects
 public:
     // Background Functions
     void initBackground(int width, int height);
-    void moveBackground(double dt, int width);
+    void moveBackground(int width);
     
     // Player Functions
     void initPlayer(std::string playerFile, sf::IntRect rect);
@@ -21,11 +21,11 @@ public:
     
     // Obstacle Functions
     void initObstacles(std::string obstFile, sf::IntRect rect);
-    void moveObstacles(sf::RenderWindow& window, double dt, int width, int height);
+    void moveObstacles(sf::RenderWindow& window, int width, int height);
     
     // Coin Functions
     void initCoins(std::string coinFile, sf::IntRect rect);
-    void moveCoins(sf::RenderWindow& window, double dt, int width, int height);
+    void moveCoins(sf::RenderWindow& window, int width, int height);
     void coinCollide(int& score, int width, int height);
 
     // Button Functions
@@ -47,7 +47,7 @@ public:
     sf::RectangleShape background[5], backgroundDupe[5];
     sf::Texture backTexture[5];
     float backgroundX[5], backgroundDupeX[5];
-    float speeds[5] = {2.0, 1.7, 1.4, 1.1, 0.8};
+    float speeds[5] = {0.2, 0.15, 0.12, 0.09, 0.06};
 
     // Button Variables
     sf::Sprite button;

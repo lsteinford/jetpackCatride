@@ -47,6 +47,9 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
             if(startButton.getButtonState() == clicked)
             {
                 startGame = true;
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+                game.window.close();
+                exit(EXIT_SUCCESS);
             }
             dt -= TIME_PER_FRAME;
             game.display();
@@ -57,8 +60,19 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
 void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obstacles, Objects& Coins, int score, sf::Clock& clock, sf::Time& dt)
 {
     Obstacles.initObstacles("assets/villiandoge.png", obstRect);
-    Coins.initCoins("assets/goldcoin1.png", coinRect);
     Player.initPlayer("assets/superCatAnimation.png", playerRect);
+
+    sf::Text scoreText;
+    sf::Font scoreFont;
+
+    scoreFont.loadFromFile("assets/Superdie.otf");
+    scoreText.setFont(scoreFont);
+    scoreText.setScale(0.75f, 0.75f);
+    scoreText.setFillColor(sf::Color::Black);
+    scoreText.setPosition(1, 1);
+
+    bool coinCollision = false;
+    bool obstCollision = false;
 
     dt = clock.restart();
     while(startGame == true && failedGame == false)
@@ -67,17 +81,6 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
         dt += clock.restart();
         while (dt >= TIME_PER_FRAME)
         {
-
-
-            sf::Text scoreText;
-            sf::Font scoreFont;
-
-            scoreFont.loadFromFile("assets/Superdie.otf");
-            scoreText.setFont(scoreFont);
-            scoreText.setString("Score: " + std::to_string(score));
-            scoreText.setScale(0.75f, 0.75f);
-            scoreText.setFillColor(sf::Color::Black);
-            scoreText.setPosition(1, 1);
             game.clear();
             Background.moveBackground(WINDOW_SIZE_X);
             for(int i = 0; i < 5; i++)
@@ -85,28 +88,28 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
                 game.drawRect(Background.background[i]);
                 game.drawRect(Background.backgroundDupe[i]);
             }
-            
-            game.drawSprite(Coins.coin);
-            game.drawSprite(Obstacles.obstSprite);
+            scoreText.setString("Score: " + std::to_string(score));
             game.drawText(scoreText);
-            
-            Obstacles.moveObstacles(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y);
-            Coins.moveCoins(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y);
-            game.drawSprite(Player.player);
-            Player.animateSprite();
-            Coins.animateSprite();
-            
-            
-            Player.movePlayer(game.window, WINDOW_SIZE_Y);
 
             sf::FloatRect obstBounds = Obstacles.obstHitBox.getGlobalBounds();
-            sf::FloatRect coinBounds = Coins.coin.getGlobalBounds();
             sf::FloatRect playerBounds = Player.player.getGlobalBounds();
+            Coins.initCoins(WINDOW_SIZE_X, WINDOW_SIZE_Y);
+            
+            Obstacles.moveObstacles(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+            Coins.updateCoins(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y, score, playerBounds);
+            Player.animateSprite();
+            Coins.animateSprite();     
+
+            Player.movePlayer(game.window, WINDOW_SIZE_Y);
+            
             if (playerBounds.intersects(obstBounds) == true){
+                obstCollision = true;
                 failedGame = true;
             }
-            if(playerBounds.intersects(coinBounds) == true){
-                Coins.coinCollide(score, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+                game.window.close();
+                exit(EXIT_SUCCESS);
             }
             dt -= TIME_PER_FRAME;
             game.display();
@@ -159,7 +162,7 @@ void deathScreen(bool& startGame, bool& failedGame, Game& game, Objects& Backgro
                 failedGame = false;
             } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
                 game.window.close();
-                break;
+                exit(EXIT_SUCCESS);
             }
             
             dt -= TIME_PER_FRAME;

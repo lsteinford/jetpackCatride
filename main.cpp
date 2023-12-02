@@ -7,7 +7,7 @@ int main()
     Objects start;
     Objects Background;
     Objects Player;
-    Objects Coin;
+    Objects Coin("assets/goldcoin1.png", coinRect, WINDOW_SIZE_X, WINDOW_SIZE_Y);
     Objects Obstacle;
     Objects startButton;
     

@@ -133,12 +133,13 @@ void Objects::movePlayer(sf::RenderWindow &window, int height)
  */
 void Objects::initObstacles(std::string obstFile, sf::IntRect rect)
 {
-    velocity = -3;
+    velocity.x = -3;
+    velocity.y = 0;
     obstSize = 0.5;
     obstRect = rect;
 
     obstSprite.setOrigin(obstRect.width / 2.0f, obstRect.height / 2.0f);
-    obstSprite.setPosition(0,0);
+    obstSprite.setPosition(0,-obstRect.width);
     obstSprite.setScale(obstSize, obstSize);
 
     obstTexture.loadFromFile(obstFile);
@@ -156,80 +157,76 @@ void Objects::initObstacles(std::string obstFile, sf::IntRect rect)
  */
 void Objects::moveObstacles(sf::RenderWindow& window, int width, int height)
 {
-    sf::Vector2f position = obstSprite.getPosition();
+    sf::FloatRect obstBounds = obstSprite.getGlobalBounds();
+    int randHeight = 0;
+    do{
+        randHeight = rand() % height;
+    } while (randHeight <= obstBounds.height);
 
-    sf::Time elapsed = clock.getElapsedTime();
-    int elapsedTime = elapsed.asMicroseconds();
-    sf::FloatRect obstBounds = coin.getGlobalBounds();
-    
-    if(position.x <= 0){
-        // srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
-        // sf::Time time = sf::seconds(0.1f);
-        obstSprite.setPosition(width + obstBounds.width, (elapsedTime % height - obstBounds.height));
-        obstHitBox.setPosition(width + obstBounds.width, (elapsedTime % height - obstBounds.height));
+    if(obstBounds.left <= -obstBounds.width){
+        obstSprite.setPosition(width + (obstBounds.width), randHeight - obstBounds.height);
+        obstHitBox.setPosition(width + (obstBounds.width), randHeight - obstBounds.height);
         clock.restart();
     }
-    obstSprite.move((velocity), 0);
-    obstHitBox.move((velocity), 0);
+    obstSprite.move(velocity.x, velocity.y);
+    obstHitBox.move(velocity.x, velocity.y);
     window.draw(obstSprite);
 }
 
 // COIN FUNCTIONS
-/**
- * @brief Initialize Coins object
- * 
- * @param coinFile 
- */
-void Objects::initCoins(std::string coinFile, sf::IntRect rect)
+
+Objects::Objects(std::string coinFile, sf::IntRect rect, int width, int height)
 {
-    velocity = -4.5;
+    velocity.x = -4.5;
+    velocity.y = 0;
     coinSize = 4;
     coinRect = rect;
     coinTexture.loadFromFile(coinFile);
     coin.setTexture(coinTexture);
     coin.setTextureRect(rect);
     coin.setScale(sf::Vector2f(coinSize, coinSize));
-    coin.setPosition(000, 000);
+    coin.setPosition(width*2, (rand() % height) - rect.height);
     objState = objState::coin;
+    coinV.resize(5, nullptr);
 }
 
-/**
- * @brief Move Coins
- * 
- * @param window 
- */
-void Objects::moveCoins(sf::RenderWindow& window, int width, int height)
+void Objects::initCoins(int height, int width)
 {
-    sf::Vector2f position = coin.getPosition();
+    for(int i = 0; i < 5; i++)
+    {
+        if(coinV[i] == nullptr)
+        {
+            Objects* newCoin = new Objects("assets/goldcoin1.png", coinRect, width, height);
+            coinV[i] = newCoin;
+        }
+    }
+}
 
+void Objects::updateCoins(sf::RenderWindow& window, int width, int height, int& score, sf::FloatRect player)
+{
     sf::Time elapsed = clock.getElapsedTime();
     int elapsedTime = elapsed.asMicroseconds();
-    sf::FloatRect coinBounds = coin.getGlobalBounds();
-    
-    if(position.x <= 0){
-        // srand(time(NULL));//might wanna do this @ constructor instead, resource hungry, but betters random #s
-        // sf::Time time = sf::seconds(0.1f);
-        coin.setPosition(width + coinBounds.width, (elapsedTime % height - coinBounds.height));
+
+    if(elapsedTime <= 5000)
+    {
+        for(int i = 0; i < coinV.size(); i++)
+        {
+            sf::FloatRect coinBounds = coinV[i]->coin.getGlobalBounds();
+            coinV[i]->coin.move(velocity.x, velocity.y);
+            window.draw(coinV[i]->coin);
+            if(coinBounds.intersects(player))
+            {
+                score += 100;
+                delete coinV[i];
+                coinV[i] = nullptr;
+            } else if(coinBounds.left <= -coinBounds.width) {
+                coinV[i]->coin.setPosition(width, (rand() % height) - coinBounds.height);
+                delete coinV[i];
+                coinV[i] = nullptr;
+            }
+        }
         clock.restart();
     }
-    coin.move((velocity), 0);
-    window.draw(coin);
-}
-
-/**
- * @brief Resets coin position and adds to score
- * 
- * @param score 
- * @param width 
- * @param height 
- */
-void Objects::coinCollide(int& score, int width, int height)
-{
-    score += 100;
-    sf::Time elapsed = clock.getElapsedTime();
-    int elapsedTime = elapsed.asMicroseconds();
-    coin.setPosition(width, (elapsedTime % height));
-    clock.restart();
 }
 
 /**

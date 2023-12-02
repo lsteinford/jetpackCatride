@@ -24,11 +24,11 @@ int main()
 
         game.events();
 
-        deltaTime += clock.restart();
+        deltaTime = clock.restart();
 
         if(startGame == false)
         {
-            mainMenu(startGame, game, Player, Background, startButton, deltaTime);
+            mainMenu(startGame, game, Player, Background, startButton, deltaTime, clock);
         }
         if(startGame == true && failedGame == false)
         {
@@ -37,7 +37,7 @@ int main()
         }
         if(failedGame)
         {
-            deathScreen(startGame, failedGame, game, Background, startButton);
+            deathScreen(startGame, failedGame, game, Background, startButton, deltaTime, clock);
         }
     }
 

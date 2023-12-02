@@ -185,19 +185,29 @@ Objects::Objects(std::string coinFile, sf::IntRect rect, int width, int height)
     coin.setTexture(coinTexture);
     coin.setTextureRect(rect);
     coin.setScale(sf::Vector2f(coinSize, coinSize));
-    coin.setPosition(width*2, (rand() % height) - rect.height);
+    int spawnPos = 0;
+    do{
+        spawnPos = rand() % height;
+    } while (spawnPos <= coinRect.height);
+    coin.setPosition(width * 2, (rand() % height) - rect.height * coin.getScale().y);
     objState = objState::coin;
     coinV.resize(5, nullptr);
 }
 
 void Objects::initCoins(int height, int width)
 {
-    for(int i = 0; i < 5; i++)
+    if (spawnClock.getElapsedTime().asSeconds() >= 1.0)  // Adjust the delay (2.0 seconds in this example)
     {
-        if(coinV[i] == nullptr)
+        for (int i = 0; i < 5; i++)
         {
-            Objects* newCoin = new Objects("assets/goldcoin1.png", coinRect, width, height);
-            coinV[i] = newCoin;
+            if (coinV[i] == nullptr)
+            {
+                Objects* newCoin = new Objects("assets/goldcoin1.png", coinRect, width, height);
+                coinV[i] = newCoin;
+                std::cout << "Creating coin: " << i << std::endl;
+                spawnClock.restart();  // Reset the spawn clock
+                break;  // Stop spawning after creating one coin
+            }
         }
     }
 }
@@ -207,26 +217,31 @@ void Objects::updateCoins(sf::RenderWindow& window, int width, int height, int& 
     sf::Time elapsed = clock.getElapsedTime();
     int elapsedTime = elapsed.asMicroseconds();
 
-    if(elapsedTime <= 5000)
-    {
+    // if(elapsedTime <= 5000)
+    // {
         for(int i = 0; i < coinV.size(); i++)
-        {
-            sf::FloatRect coinBounds = coinV[i]->coin.getGlobalBounds();
-            coinV[i]->coin.move(velocity.x, velocity.y);
-            window.draw(coinV[i]->coin);
-            if(coinBounds.intersects(player))
-            {
-                score += 100;
-                delete coinV[i];
-                coinV[i] = nullptr;
-            } else if(coinBounds.left <= -coinBounds.width) {
-                coinV[i]->coin.setPosition(width, (rand() % height) - coinBounds.height);
-                delete coinV[i];
-                coinV[i] = nullptr;
+        { 
+            if(coinV[i] != nullptr)
+            {        
+                sf::FloatRect coinBounds = coinV[i]->coin.getGlobalBounds();
+                coinV[i]->coin.move(velocity.x, velocity.y);
+                window.draw(coinV[i]->coin);
+                coinV[i]->animateSprite();
+                if(coinBounds.intersects(player))
+                {
+                    score += 100;
+                    delete coinV[i];
+                    coinV[i] = nullptr;
+                } else if(coinBounds.left <= -coinBounds.width) {
+                    // coinV[i]->coin.setPosition(width, (rand() % height) - coinBounds.height);
+                    delete coinV[i];
+                    coinV[i] = nullptr;
+                }
+
+                // std::cout << "Coin " << i << " Position: " << coinV[i]->coin.getPosition().x << std::endl;
             }
         }
-        clock.restart();
-    }
+        // clock.restart();
 }
 
 /**

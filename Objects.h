@@ -79,7 +79,8 @@ public:
     sf::Texture coinTexture;
     sf::IntRect coinRect;
     int coinSize;
-    std::vector<Objects*> coinQ;
+    std::vector<Objects*> coinV;
+    sf::Clock spawnClock;
 
 
 };

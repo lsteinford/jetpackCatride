@@ -4,6 +4,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <queue>
 
 enum objState{coin, player, obstacle};
 enum buttonState{normal, hovered, clicked};
@@ -11,6 +12,8 @@ enum buttonState{normal, hovered, clicked};
 class Objects
 {
 public:
+    Objects(){};
+
     // Background Functions
     void initBackground(int width, int height);
     void moveBackground(int width);
@@ -24,9 +27,9 @@ public:
     void moveObstacles(sf::RenderWindow& window, int width, int height);
     
     // Coin Functions
-    void initCoins(std::string coinFile, sf::IntRect rect);
-    void moveCoins(sf::RenderWindow& window, int width, int height);
-    void coinCollide(int& score, int width, int height);
+    Objects(std::string coinFile, sf::IntRect rect, int width, int height);
+    void initCoins(int height, int width);
+    void updateCoins(sf::RenderWindow& window, int width, int height, int& score, sf::FloatRect player);
 
     // Button Functions
     void initButton(std::string s, std::string text, sf::IntRect rect, sf::Vector2f position, sf::Vector2f size, sf::Color color);
@@ -68,7 +71,7 @@ public:
     sf::IntRect obstRect;
     sf::Texture obstTexture;
     float obstSize;
-    float velocity;
+    sf::Vector2f velocity;
     
 
     // Coin Variables
@@ -76,6 +79,8 @@ public:
     sf::Texture coinTexture;
     sf::IntRect coinRect;
     int coinSize;
+    std::vector<Objects*> coinV;
+    sf::Clock spawnClock;
 
 
 };

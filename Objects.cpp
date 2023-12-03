@@ -196,7 +196,7 @@ Objects::Objects(std::string coinFile, sf::IntRect rect, int width, int height)
     int spawnPos = 0;
     do{
         spawnPos = (rand() % height);
-    } while (spawnPos <= coinRect.height);
+    } while (spawnPos <= coinRect.height || spawnPos >= height - coinRect.height);
     coin.setPosition(width * 2, spawnPos);
     objState = objState::coin;
     coinV.resize(5, nullptr);

@@ -175,6 +175,14 @@ void Objects::moveObstacles(sf::RenderWindow& window, int width, int height)
 
 // COIN FUNCTIONS
 
+/**
+ * @brief Construct a new Objects:: Coin object
+ * 
+ * @param coinFile 
+ * @param rect 
+ * @param width 
+ * @param height 
+ */
 Objects::Objects(std::string coinFile, sf::IntRect rect, int width, int height)
 {
     velocity.x = -4.5;
@@ -187,13 +195,20 @@ Objects::Objects(std::string coinFile, sf::IntRect rect, int width, int height)
     coin.setScale(sf::Vector2f(coinSize, coinSize));
     int spawnPos = 0;
     do{
-        spawnPos = rand() % height;
+        spawnPos = (rand() % height);
     } while (spawnPos <= coinRect.height);
-    coin.setPosition(width * 2, (rand() % height) - rect.height * coin.getScale().y);
+    coin.setPosition(width * 2, spawnPos);
     objState = objState::coin;
     coinV.resize(5, nullptr);
 }
 
+/**
+ * @brief Adds a new Coin to the coin vector
+ *        Checks every second if a new coin needs to be added to the vector
+ * 
+ * @param height 
+ * @param width 
+ */
 void Objects::initCoins(int height, int width)
 {
     if (spawnClock.getElapsedTime().asSeconds() >= 1.0)
@@ -211,6 +226,15 @@ void Objects::initCoins(int height, int width)
     }
 }
 
+/**
+ * @brief Handles movement and collision of the coins
+ * 
+ * @param window 
+ * @param width 
+ * @param height 
+ * @param score 
+ * @param player 
+ */
 void Objects::updateCoins(sf::RenderWindow& window, int width, int height, int& score, sf::FloatRect player)
 {
     sf::Time elapsed = clock.getElapsedTime();
@@ -230,15 +254,11 @@ void Objects::updateCoins(sf::RenderWindow& window, int width, int height, int& 
                 delete coinV[i];
                 coinV[i] = nullptr;
             } else if(coinBounds.left <= -coinBounds.width) {
-                // coinV[i]->coin.setPosition(width, (rand() % height) - coinBounds.height);
                 delete coinV[i];
                 coinV[i] = nullptr;
             }
-
-            // std::cout << "Coin " << i << " Position: " << coinV[i]->coin.getPosition().x << std::endl;
         }
     }
-        // clock.restart();
 }
 
 /**

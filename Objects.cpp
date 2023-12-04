@@ -146,16 +146,18 @@ Objects::Objects(int width, int height, std::string obstFile)
     obstSize = 0.5;
     objState = objState::obstacle;
     obstSprite.setScale(obstSize, obstSize);
+    obstHitBox.setScale(obstSize, obstSize);
 
     obstTexture.loadFromFile(obstFile);
     obstSprite.setTexture(obstTexture);
+    obstSprite.setOrigin(obstTexture.getSize().x / 2, obstTexture.getSize().y / 2);
     obstHitBox.setRadius(obstSize);
     obstBounds = obstSprite.getGlobalBounds();
     int spawnPos = 0;
     do{
         spawnPos = (rand() % height);
     } while (spawnPos <= obstBounds.height || spawnPos >= height - obstBounds.height);
-    obstSprite.setPosition(width,spawnPos);
+    obstSprite.setPosition(width + obstBounds.width,spawnPos);
     obstHitBox.setPosition(obstSprite.getPosition().x, obstSprite.getPosition().y);
     obstV.resize(4, nullptr);
 }
@@ -204,7 +206,7 @@ void Objects::updateObstacles(sf::RenderWindow& window, int width, int height, s
                 failedGame = true;
                 // resetObjects();
                 // break;
-            } else if(obstV[i]->obstBounds.left <= -obstV[i]->obstBounds.width){
+            } else if(obstV[i]->obstBounds.left <= -obstV[i]->obstBounds.width * 2){
                 delete obstV[i];
                 obstV[i] = nullptr;
             }

@@ -145,13 +145,12 @@ Objects::Objects(int width, int height, std::string obstFile)
     velocity.y = 0;
     obstSize = 0.5;
     objState = objState::obstacle;
-    obstSprite.setScale(obstSize, obstSize);
-    obstHitBox.setScale(obstSize, obstSize);
-
     obstTexture.loadFromFile(obstFile);
     obstSprite.setTexture(obstTexture);
+    obstSprite.setScale(obstSize, obstSize);
+    obstHitBox.setScale(obstSize, obstSize);
     obstSprite.setOrigin(obstTexture.getSize().x / 2, obstTexture.getSize().y / 2);
-    obstHitBox.setRadius(obstSize);
+    obstHitBox.setRadius(obstSize * 2);
     obstBounds = obstSprite.getGlobalBounds();
     int spawnPos = 0;
     do{
@@ -159,7 +158,7 @@ Objects::Objects(int width, int height, std::string obstFile)
     } while (spawnPos <= obstBounds.height || spawnPos >= height - obstBounds.height);
     obstSprite.setPosition(width + obstBounds.width,spawnPos);
     obstHitBox.setPosition(obstSprite.getPosition().x, obstSprite.getPosition().y);
-    obstV.resize(4, nullptr);
+    obstV.resize(2, nullptr);
 }
 
 /**

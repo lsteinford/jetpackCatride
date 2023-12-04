@@ -93,15 +93,16 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
             sf::FloatRect playerBounds = Player.player.getGlobalBounds();
             Coins.initCoins(WINDOW_SIZE_X, WINDOW_SIZE_Y);
             
-            if(score < 500)
-                Obst.initObstacles("assets/doge.png", WINDOW_SIZE_X, WINDOW_SIZE_Y, {-3,0});
-            if(score >= 500)
-                Obst.initObstacles("assets/villiandoge.png", WINDOW_SIZE_X, WINDOW_SIZE_Y, {-4,0});
-            if(score >= 1500)
-                Obst.initObstacles("assets/finalvilliandoge.png", WINDOW_SIZE_X, WINDOW_SIZE_Y, {-6,0});
-            if(score>=makeItHardToWin){
+            if(score >= makeItHardToWin){
                 Obst.velocity.x *= 1.3;
                 makeItHardToWin += 500;
+            } else if(score >= 1500)
+                Obst.initObstacles(bossDoge, WINDOW_SIZE_X, WINDOW_SIZE_Y, {-4,0});
+            else if(score >= 500)
+                Obst.initObstacles(roboDoge, WINDOW_SIZE_X, WINDOW_SIZE_Y, {-6,0});
+            else if(score < 500){
+                Obst.initObstacles(doge, WINDOW_SIZE_X, WINDOW_SIZE_Y, {-3,0});
+                
             }
 
             Obst.updateObstacles(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y, playerBounds, failedGame);

@@ -57,9 +57,14 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
     }
 }
 
-void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obstacles, Objects& Coins, int score, sf::Clock& clock, sf::Time& dt)
+void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& obstacleOne, Objects& obstacleTwo, Objects& obstacleThree, Objects& Coins, int score, sf::Clock& clock, sf::Time& dt)
 {
-    Obstacles.initObstacles("assets/villiandoge.png", obstRect);
+    obstacleOne.initObstacles("assets/doge.png", obstRect);
+    obstacleTwo.initObstacles("assets/villiandoge.png", obstRect);
+    obstacleTwo.velocity.x = -4;
+    obstacleThree.initObstacles("assets/finalvilliandoge.png", obstRect);
+    obstacleThree.velocity.x = -6;
+
     Player.initPlayer("assets/superCatAnimation.png", playerRect);
 
     sf::Text scoreText;
@@ -73,6 +78,8 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
 
     bool coinCollision = false;
     bool obstCollision = false;
+    
+    int makeItHardToWin = 2000;
 
     dt = clock.restart();
     while(startGame == true && failedGame == false)
@@ -91,18 +98,35 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
             scoreText.setString("Score: " + std::to_string(score));
             game.drawText(scoreText);
 
-            sf::FloatRect obstBounds = Obstacles.obstHitBox.getGlobalBounds();
+            sf::FloatRect obstBoundsOne = obstacleOne.obstHitBox.getGlobalBounds();
+            sf::FloatRect obstBoundsTwo = obstacleTwo.obstHitBox.getGlobalBounds();
+            sf::FloatRect obstBoundsThree = obstacleThree.obstHitBox.getGlobalBounds();
+
             sf::FloatRect playerBounds = Player.player.getGlobalBounds();
             Coins.initCoins(WINDOW_SIZE_X, WINDOW_SIZE_Y);
             
-            Obstacles.moveObstacles(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+            obstacleOne.moveObstacles(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+            
+            
+            if(score>=500)
+                obstacleTwo.moveObstacles(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+            if(score>=1500)
+                obstacleThree.moveObstacles(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+            if(score>=makeItHardToWin){
+                obstacleOne.velocity.x *= 1.3;
+                obstacleTwo.velocity.x *= 1.3;
+                obstacleThree.velocity.x *= 1.3;
+                makeItHardToWin += 500;
+            }
+
+
             Coins.updateCoins(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y, score, playerBounds);
             Player.animateSprite();
             Coins.animateSprite();     
 
             Player.movePlayer(game.window, WINDOW_SIZE_Y);
             
-            if (playerBounds.intersects(obstBounds) == true){
+            if ((playerBounds.intersects(obstBoundsOne) || playerBounds.intersects(obstBoundsTwo) || playerBounds.intersects(obstBoundsThree)) == true){
                 obstCollision = true;
                 failedGame = true;
             }

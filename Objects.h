@@ -54,7 +54,7 @@ public:
     sf::RectangleShape background[5], backgroundDupe[5];
     sf::Texture backTexture[5];
     float backgroundX[5], backgroundDupeX[5];
-    float speeds[5] = {1.8, 1.5, 1.2, 0.9, 0.6};
+    float speeds[5] = {0.6, 0.9, 1.2, 1.5, 1.8};
 
     // Button Variables
     sf::Sprite button;

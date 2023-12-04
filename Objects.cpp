@@ -1,5 +1,17 @@
 #include "Objects.h"
 
+Objects::~Objects()
+{
+    for(int i = 0; i < obstV.size(); i++)
+    {
+        delete obstV[i];
+    }    
+    for(int i = 0; i < coinV.size(); i++)
+    {
+        delete coinV[i];
+    }
+}
+
 //  BACKGROUND FUNCTIONS
 /**
  * @brief Initialize background images
@@ -126,28 +138,49 @@ void Objects::movePlayer(sf::RenderWindow &window, int height)
 }
 
 // OBSTACLE FUNCTIONS
+
+Objects::Objects(int width, int height, std::string obstFile)
+{
+    velocity.x = -3;
+    velocity.y = 0;
+    obstSize = 0.5;
+    objState = objState::obstacle;
+    obstSprite.setScale(obstSize, obstSize);
+
+    obstTexture.loadFromFile(obstFile);
+    obstSprite.setTexture(obstTexture);
+    obstHitBox.setRadius(obstSize);
+    obstBounds = obstSprite.getGlobalBounds();
+    int spawnPos = 0;
+    do{
+        spawnPos = (rand() % height);
+    } while (spawnPos <= obstBounds.height || spawnPos >= height - obstBounds.height);
+    obstSprite.setPosition(width,spawnPos);
+    obstHitBox.setPosition(obstSprite.getPosition().x, obstSprite.getPosition().y);
+    obstV.resize(4, nullptr);
+}
+
 /**
  * @brief Initialize Obstacles object
  * 
  * @param obstFile 
  */
-void Objects::initObstacles(std::string obstFile, sf::IntRect rect)
+void Objects::initObstacles(std::string obstFile, int width, int height, sf::Vector2f velocity)
 {
-    velocity.x = -3;
-    velocity.y = 0;
-    obstSize = 0.5;
-    obstRect = rect;
-
-    obstSprite.setOrigin(obstRect.width / 2.0f, obstRect.height / 2.0f);
-    obstSprite.setPosition(0,-obstRect.width);
-    obstSprite.setScale(obstSize, obstSize);
-
-    obstTexture.loadFromFile(obstFile);
-    obstSprite.setTexture(obstTexture);
-    obstSprite.setTextureRect(obstRect); 
-    obstHitBox.setRadius(obstSize);
-    obstHitBox.setPosition(obstSprite.getPosition().x, obstSprite.getPosition().y);
-
+    if (spawnClock.getElapsedTime().asSeconds() >= 4.0)
+    {
+        for (int i = 0; i < obstV.size(); i++)
+        {
+            if (obstV[i] == nullptr)
+            {
+                Objects* newObst = new Objects(width, height, obstFile);
+                newObst->velocity = velocity;
+                obstV[i] = newObst;
+                spawnClock.restart();
+                break;
+            }
+        }
+    }
 }
 
 /**
@@ -155,22 +188,56 @@ void Objects::initObstacles(std::string obstFile, sf::IntRect rect)
  * 
  * @param window 
  */
-void Objects::moveObstacles(sf::RenderWindow& window, int width, int height)
+void Objects::updateObstacles(sf::RenderWindow& window, int width, int height, sf::FloatRect player, bool& failedGame)
 {
-    sf::FloatRect obstBounds = obstSprite.getGlobalBounds();
-    int randHeight = 0;
-    do{
-        randHeight = rand() % height;
-    } while (randHeight <= obstBounds.height || randHeight >= height - obstBounds.height);
 
-    if(obstBounds.left <= -obstBounds.width){
-        obstSprite.setPosition(width + (obstBounds.width), randHeight);
-        obstHitBox.setPosition(width + (obstBounds.width), randHeight);
-        clock.restart();
+    for(int i = 0; i < obstV.size(); i++)
+    { 
+        if(obstV[i] != nullptr)
+        { 
+            obstV[i]->obstBounds = obstV[i]->obstHitBox.getGlobalBounds();
+            obstV[i]->obstSprite.move(velocity.x, velocity.y);
+            obstV[i]->obstHitBox.move(velocity.x, velocity.y);
+            window.draw(obstV[i]->obstSprite);
+            
+            if(obstV[i]->obstBounds.intersects(player)){
+                failedGame = true;
+                // resetObjects();
+                // break;
+            } else if(obstV[i]->obstBounds.left <= -obstV[i]->obstBounds.width){
+                delete obstV[i];
+                obstV[i] = nullptr;
+            }
+            
+        }
     }
-    obstSprite.move(velocity.x, velocity.y);
-    obstHitBox.move(velocity.x, velocity.y);
-    window.draw(obstSprite);
+}
+
+void Objects::resetObjects()
+{
+    if(this->getObjState() == objState::obstacle)
+    {
+        for(int i = 0; i < this->obstV.size(); i++)
+        {
+            do
+            {
+                delete obstV[i];
+                obstV[i] = nullptr;
+            } while (obstV[i] != nullptr);
+        }
+        // obstV.clear();
+    } else if (this->getObjState() == objState::coin){
+        for(int i = 0; i < this->coinV.size(); i++)
+        {
+            do
+            {
+                delete coinV[i];
+                coinV[i] = nullptr;
+            } while (coinV[i] != nullptr);
+        }
+        // coinV.clear();
+    }
+    spawnClock.restart();
 }
 
 // COIN FUNCTIONS
@@ -214,7 +281,7 @@ void Objects::initCoins(int height, int width)
 {
     if (spawnClock.getElapsedTime().asSeconds() >= 1.0)
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < coinV.size(); i++)
         {
             if (coinV[i] == nullptr)
             {
@@ -238,9 +305,6 @@ void Objects::initCoins(int height, int width)
  */
 void Objects::updateCoins(sf::RenderWindow& window, int width, int height, int& score, sf::FloatRect player)
 {
-    sf::Time elapsed = clock.getElapsedTime();
-    int elapsedTime = elapsed.asMicroseconds();
-
     for(int i = 0; i < coinV.size(); i++)
     { 
         if(coinV[i] != nullptr)

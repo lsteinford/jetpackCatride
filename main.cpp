@@ -1,4 +1,5 @@
 #include "header.h"
+#include <SFML/Audio.hpp>
 
 int main()
 {
@@ -18,8 +19,13 @@ int main()
     sf::Time deltaTime = sf::Time::Zero;
 
     while(game.gameRunning())
-    {
+    {   
         sf::Clock clock; // starts the clock
+        sf::Music music; // doesnt start the clock
+
+        music.openFromFile("assets/bababooey.wav");
+        music.setLoop(true);
+        music.play();
         
 
         game.events();

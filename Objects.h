@@ -78,6 +78,7 @@ public:
     sf::Sprite coin;
     sf::Texture coinTexture;
     sf::IntRect coinRect;
+    sf::FloatRect coinBounds;
     int coinSize;
     std::vector<Objects*> coinV;
     sf::Clock spawnClock;

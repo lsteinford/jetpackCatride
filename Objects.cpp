@@ -161,11 +161,11 @@ void Objects::moveObstacles(sf::RenderWindow& window, int width, int height)
     int randHeight = 0;
     do{
         randHeight = rand() % height;
-    } while (randHeight <= obstBounds.height);
+    } while (randHeight <= obstBounds.height || randHeight >= height - obstBounds.height);
 
     if(obstBounds.left <= -obstBounds.width){
-        obstSprite.setPosition(width + (obstBounds.width), randHeight - obstBounds.height);
-        obstHitBox.setPosition(width + (obstBounds.width), randHeight - obstBounds.height);
+        obstSprite.setPosition(width + (obstBounds.width), randHeight);
+        obstHitBox.setPosition(width + (obstBounds.width), randHeight);
         clock.restart();
     }
     obstSprite.move(velocity.x, velocity.y);
@@ -193,10 +193,11 @@ Objects::Objects(std::string coinFile, sf::IntRect rect, int width, int height)
     coin.setTexture(coinTexture);
     coin.setTextureRect(rect);
     coin.setScale(sf::Vector2f(coinSize, coinSize));
+    coinBounds = coin.getGlobalBounds();
     int spawnPos = 0;
     do{
         spawnPos = (rand() % height);
-    } while (spawnPos <= coinRect.height || spawnPos >= height - coinRect.height);
+    } while (spawnPos <= coinBounds.height || spawnPos >= height - coinBounds.height);
     coin.setPosition(width * 2, spawnPos);
     objState = objState::coin;
     coinV.resize(5, nullptr);
@@ -244,16 +245,16 @@ void Objects::updateCoins(sf::RenderWindow& window, int width, int height, int& 
     { 
         if(coinV[i] != nullptr)
         {        
-            sf::FloatRect coinBounds = coinV[i]->coin.getGlobalBounds();
+            coinV[i]->coinBounds = coinV[i]->coin.getGlobalBounds();
             coinV[i]->coin.move(velocity.x, velocity.y);
             window.draw(coinV[i]->coin);
             coinV[i]->animateSprite();
-            if(coinBounds.intersects(player))
+            if(coinV[i]->coinBounds.intersects(player))
             {
                 score += 100;
                 delete coinV[i];
                 coinV[i] = nullptr;
-            } else if(coinBounds.left <= -coinBounds.width) {
+            } else if(coinV[i]->coinBounds.left <= -coinV[i]->coinBounds.width) {
                 delete coinV[i];
                 coinV[i] = nullptr;
             }

@@ -13,6 +13,8 @@ class Objects
 {
 public:
     Objects(){};
+    ~Objects();
+    void resetObjects();
 
     // Background Functions
     void initBackground(int width, int height);
@@ -23,8 +25,9 @@ public:
     void movePlayer(sf::RenderWindow &window, int height);
     
     // Obstacle Functions
-    void initObstacles(std::string obstFile, sf::IntRect rect);
-    void moveObstacles(sf::RenderWindow& window, int width, int height);
+    Objects(int width, int height, std::string obstFile);
+    void initObstacles(std::string obstFile, int width, int height, sf::Vector2f velocity);
+    void updateObstacles(sf::RenderWindow& window, int width, int height, sf::FloatRect player, bool& failedGame);
     
     // Coin Functions
     Objects(std::string coinFile, sf::IntRect rect, int width, int height);
@@ -45,6 +48,7 @@ public:
     sf::Uint32 objState, btnState;
     sf::Font font;
     sf::Clock clock;
+    sf::Clock spawnClock;
 
     // Background Variables
     sf::RectangleShape background[5], backgroundDupe[5];
@@ -68,10 +72,11 @@ public:
     //Obstacle Variables
     sf::Sprite obstSprite;
     sf::CircleShape obstHitBox;
-    sf::IntRect obstRect;
+    sf::FloatRect obstBounds;
     sf::Texture obstTexture;
     float obstSize;
     sf::Vector2f velocity;
+    std::vector<Objects*> obstV;
     
 
     // Coin Variables
@@ -81,7 +86,7 @@ public:
     sf::FloatRect coinBounds;
     int coinSize;
     std::vector<Objects*> coinV;
-    sf::Clock spawnClock;
+    
 
 
 };

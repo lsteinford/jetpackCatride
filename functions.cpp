@@ -57,14 +57,9 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
     }
 }
 
-void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& obstacleOne, Objects& obstacleTwo, Objects& obstacleThree, Objects& Coins, int score, sf::Clock& clock, sf::Time& dt)
+void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obst, Objects& Coins, int score, sf::Clock& clock, sf::Time& dt)
 {
-    obstacleOne.initObstacles("assets/doge.png", obstRect);
-    obstacleTwo.initObstacles("assets/villiandoge.png", obstRect);
-    obstacleTwo.velocity.x = -4;
-    obstacleThree.initObstacles("assets/finalvilliandoge.png", obstRect);
-    obstacleThree.velocity.x = -6;
-
+    // Obst.initObstacles("assets/doge.png", WINDOW_SIZE_X, WINDOW_SIZE_Y, -3);
     Player.initPlayer("assets/superCatAnimation.png", playerRect);
 
     sf::Text scoreText;
@@ -75,9 +70,6 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
     scoreText.setScale(0.75f, 0.75f);
     scoreText.setFillColor(sf::Color::Black);
     scoreText.setPosition(1, 1);
-
-    bool coinCollision = false;
-    bool obstCollision = false;
     
     int makeItHardToWin = 2000;
 
@@ -98,37 +90,30 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
             scoreText.setString("Score: " + std::to_string(score));
             game.drawText(scoreText);
 
-            sf::FloatRect obstBoundsOne = obstacleOne.obstHitBox.getGlobalBounds();
-            sf::FloatRect obstBoundsTwo = obstacleTwo.obstHitBox.getGlobalBounds();
-            sf::FloatRect obstBoundsThree = obstacleThree.obstHitBox.getGlobalBounds();
-
             sf::FloatRect playerBounds = Player.player.getGlobalBounds();
             Coins.initCoins(WINDOW_SIZE_X, WINDOW_SIZE_Y);
             
-            obstacleOne.moveObstacles(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y);
-            
-            
-            if(score>=500)
-                obstacleTwo.moveObstacles(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y);
-            if(score>=1500)
-                obstacleThree.moveObstacles(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+            if(score < 500)
+                Obst.initObstacles("assets/doge.png", WINDOW_SIZE_X, WINDOW_SIZE_Y, {-3,0});
+            if(score >= 500)
+                Obst.initObstacles("assets/villiandoge.png", WINDOW_SIZE_X, WINDOW_SIZE_Y, {-4,0});
+            if(score >= 1500)
+                Obst.initObstacles("assets/finalvilliandoge.png", WINDOW_SIZE_X, WINDOW_SIZE_Y, {-6,0});
             if(score>=makeItHardToWin){
-                obstacleOne.velocity.x *= 1.3;
-                obstacleTwo.velocity.x *= 1.3;
-                obstacleThree.velocity.x *= 1.3;
+                Obst.velocity.x *= 1.3;
                 makeItHardToWin += 500;
             }
 
-
+            Obst.updateObstacles(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y, playerBounds, failedGame);
             Coins.updateCoins(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y, score, playerBounds);
             Player.animateSprite();
-            Coins.animateSprite();     
+    
 
             Player.movePlayer(game.window, WINDOW_SIZE_Y);
             
-            if ((playerBounds.intersects(obstBoundsOne) || playerBounds.intersects(obstBoundsTwo) || playerBounds.intersects(obstBoundsThree)) == true){
-                obstCollision = true;
-                failedGame = true;
+            if(failedGame){
+                Coins.resetObjects();
+                Obst.resetObjects();
             }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){

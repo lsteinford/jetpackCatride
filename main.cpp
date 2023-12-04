@@ -9,7 +9,7 @@ int main()
     Objects Background;
     Objects Player;
     Objects Coin("assets/goldcoin1.png", coinRect, WINDOW_SIZE_X, WINDOW_SIZE_Y);
-    Objects obstacleOne, obstacleTwo, obstacleThree;
+    Objects Obst(WINDOW_SIZE_X, WINDOW_SIZE_Y, "assets/doge.png");
     Objects startButton;
     
     int score = 0;
@@ -39,7 +39,7 @@ int main()
         if(startGame == true && failedGame == false)
         {
             deltaTime += clock.restart();
-            gameRun(startGame, failedGame, game, Background, Player, obstacleOne, obstacleTwo, obstacleThree, Coin, score, clock, deltaTime);
+            gameRun(startGame, failedGame, game, Background, Player, Obst, Coin, score, clock, deltaTime);
         }
         if(failedGame)
         {

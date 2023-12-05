@@ -1,5 +1,10 @@
 #include "Objects.h"
 
+/**
+ * @brief Destructor for Coins and Obstacles
+ *        Clears both vectors
+ * 
+ */
 Objects::~Objects()
 {
     for(int i = 0; i < obstV.size(); i++)
@@ -137,6 +142,13 @@ void Objects::movePlayer(sf::RenderWindow &window, int height)
 
 // OBSTACLE FUNCTIONS
 
+/**
+ * @brief Construct a new Obstacle Object
+ * 
+ * @param width 
+ * @param height 
+ * @param obstFile 
+ */
 Objects::Objects(int width, int height, std::string obstFile)
 {
     velocity.x = -3;
@@ -210,6 +222,10 @@ void Objects::updateObstacles(sf::RenderWindow& window, int width, int height, s
     }
 }
 
+/**
+ * @brief Resets the vectors of the obstacles or coins 
+ * 
+ */
 void Objects::resetObjects()
 {
     if(this->getObjState() == objState::obstacle)
@@ -238,7 +254,7 @@ void Objects::resetObjects()
 // COIN FUNCTIONS
 
 /**
- * @brief Construct a new Objects:: Coin object
+ * @brief Construct a new Coin object
  * 
  * @param coinFile 
  * @param rect 

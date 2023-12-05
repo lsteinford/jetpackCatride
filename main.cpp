@@ -35,7 +35,7 @@ int main()
 
         if(startGame == false)
         {
-            mainMenu(startGame, game, Player, Background, startButton, deltaTime, clock);
+            mainMenu(startGame, game, Player, Background, startButton, deltaTime, clock, score);
         }
         if(startGame == true && failedGame == false)
         {

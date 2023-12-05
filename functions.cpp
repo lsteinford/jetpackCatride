@@ -57,7 +57,7 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
     }
 }
 
-void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obst, Objects& Coins, int score, sf::Clock& clock, sf::Time& dt)
+void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obst, Objects& Coins, int score, sf::Clock& clock, sf::Time& dt, int &speedSwitch)
 {
     // Obst.initObstacles("assets/doge.png", WINDOW_SIZE_X, WINDOW_SIZE_Y, -3);
     Player.initPlayer("assets/superCatAnimation.png", playerRect);
@@ -92,21 +92,22 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
 
             sf::FloatRect playerBounds = Player.player.getGlobalBounds();
             Coins.initCoins(WINDOW_SIZE_X, WINDOW_SIZE_Y);
-            
+            if(score==speedSwitch&&score<2500)
+            {
+                speedSwitch+=100;
+                Player.moveUp.y-=.5;
+                Player.moveDown.y+=.5;
+
+            }
             if(score >= makeItHardToWin){
                 Obst.velocity.x *= 1.3;
                 makeItHardToWin += 500;
             } else if(score >= 1500) {
                 Obst.initObstacles(bossDoge, WINDOW_SIZE_X, WINDOW_SIZE_Y, {-6,0});
-                Player.moveUp.y -= 0.01;
-                Player.moveDown.y += 0.01;
             } else if(score >= 500) {
                 Obst.initObstacles(roboDoge, WINDOW_SIZE_X, WINDOW_SIZE_Y, {-4,0});
-                Player.moveUp.y -= 0.01;
-                Player.moveDown.y += 0.01;
             } else if(score < 500) {
                 Obst.initObstacles(doge, WINDOW_SIZE_X, WINDOW_SIZE_Y, {-3,0});
-                
             }
 
             Obst.updateObstacles(game.window, WINDOW_SIZE_X, WINDOW_SIZE_Y, playerBounds, failedGame);

@@ -156,7 +156,7 @@ Objects::Objects(int width, int height, std::string obstFile)
     } while (spawnPos <= obstBounds.height || spawnPos >= height - obstBounds.height);
     obstSprite.setPosition(width + obstBounds.width,spawnPos);
     obstHitBox.setPosition(obstSprite.getPosition().x, obstSprite.getPosition().y);
-    obstV.resize(2, nullptr);
+    obstV.resize(3, nullptr);
 }
 
 /**
@@ -166,7 +166,7 @@ Objects::Objects(int width, int height, std::string obstFile)
  */
 void Objects::initObstacles(std::string obstFile, int width, int height, sf::Vector2f velocity)
 {
-    if (spawnClock.getElapsedTime().asSeconds() >= 4.0)
+    if (spawnClock.getElapsedTime().asSeconds() >= 3.0)
     {
         for (int i = 0; i < obstV.size(); i++)
         {
@@ -201,8 +201,6 @@ void Objects::updateObstacles(sf::RenderWindow& window, int width, int height, s
             
             if(obstV[i]->obstBounds.intersects(player)){
                 failedGame = true;
-                // resetObjects();
-                // break;
             } else if(obstV[i]->obstBounds.left <= -obstV[i]->obstBounds.width * 2){
                 delete obstV[i];
                 obstV[i] = nullptr;
@@ -224,7 +222,6 @@ void Objects::resetObjects()
                 obstV[i] = nullptr;
             } while (obstV[i] != nullptr);
         }
-        // obstV.clear();
     } else if (this->getObjState() == objState::coin){
         for(int i = 0; i < this->coinV.size(); i++)
         {
@@ -234,7 +231,6 @@ void Objects::resetObjects()
                 coinV[i] = nullptr;
             } while (coinV[i] != nullptr);
         }
-        // coinV.clear();
     }
     spawnClock.restart();
 }

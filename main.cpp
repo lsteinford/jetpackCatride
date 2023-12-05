@@ -9,7 +9,7 @@ int main()
     Objects Background;
     Objects Player;
     Objects Coin("assets/goldcoin1.png", coinRect, WINDOW_SIZE_X, WINDOW_SIZE_Y);
-    Objects Obst(WINDOW_SIZE_X, WINDOW_SIZE_Y, "assets/doge.png");
+    Objects Obst(WINDOW_SIZE_X, WINDOW_SIZE_Y, doge);
     Objects startButton;
     
 

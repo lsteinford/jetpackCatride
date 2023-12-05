@@ -57,7 +57,7 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
     }
 }
 
-void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obst, Objects& Coins, int score, sf::Clock& clock, sf::Time& dt, int &speedSwitch)
+void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obst, Objects& Coins, int score, sf::Clock& clock, sf::Time& dt)
 {
     // Obst.initObstacles("assets/doge.png", WINDOW_SIZE_X, WINDOW_SIZE_Y, -3);
     Player.initPlayer("assets/superCatAnimation.png", playerRect);
@@ -70,7 +70,8 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
     scoreText.setScale(0.75f, 0.75f);
     scoreText.setFillColor(sf::Color::Black);
     scoreText.setPosition(1, 1);
-    
+
+    int speedSwitch = 500;
     int makeItHardToWin = 2000;
 
     dt = clock.restart();
@@ -95,8 +96,8 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
             if(score==speedSwitch&&score<2500)
             {
                 speedSwitch+=100;
-                Player.moveUp.y-=.5;
-                Player.moveDown.y+=.5;
+                Player.moveUp.y-=0.5;
+                Player.moveDown.y+=0.5;
 
             }
             if(score >= makeItHardToWin){

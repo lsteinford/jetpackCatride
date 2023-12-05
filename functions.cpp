@@ -57,7 +57,7 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
     }
 }
 
-void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obst, Objects& Coins, int score, sf::Clock& clock, sf::Time& dt)
+void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& Obst, Objects& Coins, int& score, sf::Clock& clock, sf::Time& dt)
 {
     // Obst.initObstacles("assets/doge.png", WINDOW_SIZE_X, WINDOW_SIZE_Y, -3);
     Player.initPlayer("assets/superCatAnimation.png", playerRect);
@@ -133,7 +133,7 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
     }
 }
 
-void deathScreen(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects startButton, sf::Time dt, sf::Clock clock)
+void deathScreen(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects startButton, sf::Time dt, sf::Clock clock, int& scoreTotal)
 {
     dt = clock.restart();
     while(startGame == true && failedGame == true)
@@ -142,7 +142,7 @@ void deathScreen(bool& startGame, bool& failedGame, Game& game, Objects& Backgro
         dt += clock.restart();
         while (dt >= TIME_PER_FRAME)
         {
-            sf::Text retry, esc;
+            sf::Text retry, esc, score;
             sf::Font font;
 
             font.loadFromFile("assets/Superdie.otf");
@@ -162,6 +162,14 @@ void deathScreen(bool& startGame, bool& failedGame, Game& game, Objects& Backgro
             esc.setOrigin(escBox.width / 2, escBox.height / 2);
             esc.setPosition(WINDOW_SIZE_X / 2, 10);
 
+            score.setFont(font);
+            score.setString("Final Score: " + std::to_string(scoreTotal));
+            score.setScale(1.0f, 1.0f);
+            score.setFillColor(sf::Color::Black);
+            sf::FloatRect scoreBox = esc.getLocalBounds();
+            score.setOrigin(scoreBox.width / 2, scoreBox.height / 2);
+            score.setPosition(WINDOW_SIZE_X / 2, WINDOW_SIZE_Y / 2);
+
             Background.moveBackground(WINDOW_SIZE_X);
             for(int i = 0; i < 5; i++)
             {
@@ -171,6 +179,7 @@ void deathScreen(bool& startGame, bool& failedGame, Game& game, Objects& Backgro
 
             game.drawText(retry);
             game.drawText(esc);
+            game.drawText(score);
 
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::R))
             {

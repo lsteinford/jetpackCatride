@@ -44,7 +44,7 @@ int main()
         }
         if(failedGame)
         {
-            deathScreen(startGame, failedGame, game, Background, startButton, deltaTime, clock);
+            deathScreen(startGame, failedGame, game, Background, startButton, deltaTime, clock, score);
         }
     }
 

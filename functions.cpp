@@ -1,6 +1,6 @@
 #include "header.h"
 
-void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background, Objects startButton, sf::Time& dt, sf::Clock clock)
+void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background, Objects startButton, sf::Time& dt, sf::Clock clock, int& score)
 {
     Player.initPlayer("assets/superCatAnimation.png", playerRect);
     Background.initBackground(WINDOW_SIZE_X, WINDOW_SIZE_Y);
@@ -23,6 +23,8 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
     sf::FloatRect textBox = title.getLocalBounds();
     title.setOrigin(textBox.width / 2, textBox.height / 2);
     title.setPosition(WINDOW_SIZE_X / 2, WINDOW_SIZE_Y / 4);
+
+    score = 0;
 
     dt = clock.restart();
     while(startGame == false)

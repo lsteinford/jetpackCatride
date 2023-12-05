@@ -22,7 +22,7 @@ const std::string doge = "assets/doge.png";
 const std::string roboDoge = "assets/villaindoge.png";
 const std::string bossDoge = "assets/finalvillaindoge.png";
 
-void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background, Objects startButton, sf::Time& dt, sf::Clock clock);
+void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background, Objects startButton, sf::Time& dt, sf::Clock clock, int& score);
 void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects& Player, Objects& obstacleOne, Objects& Coins, int& score, sf::Clock& clock, sf::Time& dt);
 void deathScreen(bool& startGame, bool& failedGame, Game& game, Objects& Background, Objects startButton, sf::Time dt, sf::Clock clock, int& scoreTotal);
 

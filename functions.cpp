@@ -24,7 +24,7 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
     title.setOrigin(textBox.width / 2, textBox.height / 2);
     title.setPosition(WINDOW_SIZE_X / 2, WINDOW_SIZE_Y / 4);
 
-    score = 2000;
+    score = 0;
 
 
     dt = clock.restart();

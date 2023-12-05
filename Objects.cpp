@@ -81,6 +81,9 @@ void Objects::moveBackground(int width)
  */
 void Objects::initPlayer(std::string playerFile, sf::IntRect rect)
 {
+    moveUp = {0,-2};
+    moveDown = {0,2.25};
+    idle = {0,0};
     playerX = 200;
     playerY = 300;
     playerSizeX = 3;
@@ -105,12 +108,7 @@ void Objects::initPlayer(std::string playerFile, sf::IntRect rect)
  */
 void Objects::movePlayer(sf::RenderWindow &window, int height)
 {
-    moveUp.x = 0;
-    moveUp.y = -2;
-    moveDown.x = 0;
-    moveDown.y = 2.25;
-    idle.x = 0;
-    idle.y = 0;
+    
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
     {

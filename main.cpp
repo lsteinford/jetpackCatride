@@ -12,6 +12,8 @@ int main()
     Objects Obst(WINDOW_SIZE_X, WINDOW_SIZE_Y, "assets/doge.png");
     Objects startButton;
     
+    int speedSwitch = 500;
+
     int score = 0;
 
     bool startGame = false;
@@ -39,7 +41,7 @@ int main()
         if(startGame == true && failedGame == false)
         {
             deltaTime += clock.restart();
-            gameRun(startGame, failedGame, game, Background, Player, Obst, Coin, score, clock, deltaTime);
+            gameRun(startGame, failedGame, game, Background, Player, Obst, Coin, score, clock, deltaTime, speedSwitch);
         }
         if(failedGame)
         {

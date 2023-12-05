@@ -24,9 +24,8 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
     title.setOrigin(textBox.width / 2, textBox.height / 2);
     title.setPosition(WINDOW_SIZE_X / 2, WINDOW_SIZE_Y / 4);
 
-    score = 0;
-    Player.moveUp.y = -2;
-    Player.moveDown.y = 2.25;
+    score = 2000;
+
 
     dt = clock.restart();
     while(startGame == false)
@@ -77,6 +76,7 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
 
     int speedSwitch = 500;
     int makeItHardToWin = 2000;
+    Obst.velocity.x = -3;
 
     dt = clock.restart();
     while(startGame == true && failedGame == false)

@@ -25,6 +25,8 @@ void mainMenu(bool& startGame, Game& game, Objects& Player, Objects& Background,
     title.setPosition(WINDOW_SIZE_X / 2, WINDOW_SIZE_Y / 4);
 
     score = 0;
+    Player.moveUp.y = -2;
+    Player.moveDown.y = 2.25;
 
     dt = clock.restart();
     while(startGame == false)

@@ -96,11 +96,15 @@ void gameRun(bool& startGame, bool& failedGame, Game& game, Objects& Background,
             if(score >= makeItHardToWin){
                 Obst.velocity.x *= 1.3;
                 makeItHardToWin += 500;
-            } else if(score >= 1500)
-                Obst.initObstacles(bossDoge, WINDOW_SIZE_X, WINDOW_SIZE_Y, {-4,0});
-            else if(score >= 500)
-                Obst.initObstacles(roboDoge, WINDOW_SIZE_X, WINDOW_SIZE_Y, {-6,0});
-            else if(score < 500){
+            } else if(score >= 1500) {
+                Obst.initObstacles(bossDoge, WINDOW_SIZE_X, WINDOW_SIZE_Y, {-6,0});
+                Player.moveUp.y -= 0.01;
+                Player.moveDown.y += 0.01;
+            } else if(score >= 500) {
+                Obst.initObstacles(roboDoge, WINDOW_SIZE_X, WINDOW_SIZE_Y, {-4,0});
+                Player.moveUp.y -= 0.01;
+                Player.moveDown.y += 0.01;
+            } else if(score < 500) {
                 Obst.initObstacles(doge, WINDOW_SIZE_X, WINDOW_SIZE_Y, {-3,0});
                 
             }

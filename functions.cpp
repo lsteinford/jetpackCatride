@@ -187,6 +187,7 @@ void deathScreen(bool& startGame, bool& failedGame, Game& game, Objects& Backgro
             {
                 startGame = false;
                 failedGame = false;
+                scoreTotal = 0;
             } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
                 game.window.close();
                 exit(EXIT_SUCCESS);
